@@ -3,6 +3,8 @@ package com.example.s4966.ecs165;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     static {
         System.loadLibrary("native-lib");
     }
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        tv.setText("Hello World!");
+
+        //test only
+
     }
 
     /**
