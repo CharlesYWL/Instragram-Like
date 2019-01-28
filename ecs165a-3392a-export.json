@@ -1,0 +1,9 @@
+{
+  "users" : {
+    "ddf567" : {
+      "bio" : "Hello world",
+      "name" : "Weili",
+      "gender":"Male"
+    }
+  }
+}
