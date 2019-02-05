@@ -1,0 +1,41 @@
+[33mcommit c91deb6483889900cd1fa30594d8e36eec877ca0[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Tue Feb 5 03:39:47 2019 -0800
+
+    CoorLayout fail
+
+[33mcommit fd5876da6db1bc9c4fdd84a83ab003b010829d46[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Mon Feb 4 22:51:21 2019 -0800
+
+    working on more fancy UI
+
+[33mcommit fb1ce76173d5ee93ed2f0e86d0db80fe632c0638[m[33m ([m[1;31morigin/demo[m[33m, [m[1;32mdemo[m[33m)[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Tue Jan 29 16:42:11 2019 -0800
+
+    merge
+
+[33mcommit 345ec29b0d53568f1dcb4a7e563bf4fd84342157[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Mon Jan 28 04:54:44 2019 -0800
+
+    Firebase Updata&Read OK
+
+[33mcommit 01fe08d70587a1e36f7633ac18c8af127946055f[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Mon Jan 28 03:25:03 2019 -0800
+
+    add implementation and no crushes
+
+[33mcommit f90c9fefcfb8ba6329397afda25e0784d8950ea9[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Sat Jan 26 14:51:25 2019 -0800
+
+    Add README
+
+[33mcommit 29116fd570569d1cbf65835e30fe749d92dbb27a[m
+Author: CharlesYWL <34050457+CharlesYWL@users.noreply.github.com>
+Date:   Tue Jan 15 13:49:48 2019 -0800
+
+    First commit
