@@ -1,5 +1,6 @@
 package com.example.s4966.ecs165;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView nameHolder = findViewById(R.id.NameHost);
         final EditText nameEntered = findViewById(R.id.editText);
         final Button setButton = findViewById(R.id.button);
+        final Button ProfileButton = findViewById(R.id.profile_button);
 
         //made change
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -56,7 +58,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//    nameHolder.setText(mDatabase.child("users").child("1").child("name").val());
+        ProfileButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,Profile.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
