@@ -25,6 +25,8 @@ public class Profile extends AppCompatActivity {
 
         //init myAuth
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +52,9 @@ public class Profile extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void updateUI(FirebaseUser user){
+
     }
 
 
