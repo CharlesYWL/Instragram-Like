@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFragment()
     {
-
         homepage = new HomePage();
         addressbook = new AddressBook();
         fragments = new Fragment[]{homepage,addressbook};

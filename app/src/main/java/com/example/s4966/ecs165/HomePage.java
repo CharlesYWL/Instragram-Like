@@ -22,8 +22,8 @@ public class HomePage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        textView = (TextView) getActivity().findViewById(R.id.message);
-        textView.setText("This is HomePage");
+        //textView = (TextView) getActivity().findViewById(R.id.message);
+        //textView.setText("This is HomePage");
 
     }
 }
