@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
@@ -28,7 +29,23 @@ public class Profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setBackWork(mToolbar);
 
-        allListen();
+        //this one listen to toolbar click
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.Setting:
+                        //open modify activity
+                        Intent intent = new Intent();
+                        intent.setClass(Profile.this,ProfileModify.class);
+                        startActivity(intent);
+                        //test only
+                        Toast.makeText(Profile.this,"Enter setting",Toast.LENGTH_LONG).show();
+                        return true;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -42,55 +59,6 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    public void allListen(){
-        //init all button
-        ImageButton PicChange = findViewById(R.id.pic_button);
-        ImageButton NameChange = findViewById(R.id.name_button);
-        ImageButton IdChange = findViewById(R.id.uid_button);
-        ImageButton GenderChange = findViewById(R.id.gender_button);
-        ImageButton BioChange = findViewById(R.id.bio_button);
 
-        PicChange.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent1 = new Intent();
-                intent1.setClass(Profile.this,PictureChange.class);
-                startActivity(intent1);
-            }
-        });
-        NameChange.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent2 = new Intent();
-                intent2.setClass(Profile.this,NameChange.class);
-                startActivity(intent2);
-            }
-        });
-        IdChange.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent3 = new Intent();
-                intent3.setClass(Profile.this,IdChange.class);
-                startActivity(intent3);
-            }
-        });
-        GenderChange.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent4 = new Intent();
-                intent4.setClass(Profile.this,GenderChange.class);
-                startActivity(intent4);
-            }
-        });
-        BioChange.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent5 = new Intent();
-                intent5.setClass(Profile.this,BioChange.class);
-                startActivity(intent5);
-            }
-        });
-
-    }
 }
 

@@ -13,10 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".BioChange"></activity>
-        <activity android:name=".GenderChange" />
-        <activity android:name=".IdChange" />
-        <activity android:name=".NameChange" />
+        <activity android:name=".ProfileModify"></activity>
         <activity android:name=".PictureChange" />
         <activity android:name=".Profile" />
         <activity
