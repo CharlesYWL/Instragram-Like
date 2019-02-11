@@ -112,3 +112,19 @@ private void attemptLogin() {
 
 }
 ```
+##Action bar stuff
+in onCreate():
+```java
+//action bar stuff
+ActionBar actionBar=getSupportActionBar();
+actionBar.setDisplayHomeAsUpEnabled(true);
+```
+in Class:
+```java
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+
+    getMenuInflater().inflate(R.menu.actionbar,menu);
+    return super.onCreateOptionsMenu(menu);
+}
+```

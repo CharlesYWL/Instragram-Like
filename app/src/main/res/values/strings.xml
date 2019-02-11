@@ -177,4 +177,11 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_addressbook">AddressBook</string>
+    <string name="title_post">Post</string>
+    <string name="title_profile">Profile</string>
 </resources>
