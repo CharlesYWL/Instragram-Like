@@ -14,15 +14,18 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="top of xml" />
+        android:text="People You Follow"
+        android:textSize="28dp"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        />
 
     <view class="android.support.v7.app.AlertController$RecycleListView"
     android:id="@+id/addressRecycleView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@+id/textView6"
-    android:layout_below="@+id/textView7">
+    android:layout_below="@id/textView7">
 
 
 

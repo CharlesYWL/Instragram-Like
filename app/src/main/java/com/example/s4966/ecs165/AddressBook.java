@@ -3,10 +3,12 @@ package com.example.s4966.ecs165;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 
 public class AddressBook extends Fragment {
 
@@ -24,5 +26,6 @@ public class AddressBook extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //textView = (TextView) getActivity().findViewById(R.id.message);
         //textView.setText("This is Addressbook");
+
     }
 }
