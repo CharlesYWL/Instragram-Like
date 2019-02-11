@@ -1,5 +1,6 @@
 package com.example.s4966.ecs165;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.*;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.view.Menu;
 import android.widget.Toast;
@@ -19,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private AddressBook addressbook;
     private Fragment[] fragments;
     private int lastfragment;//用于记录上个选择的Fragment
-    private Toolbar mToolbar;
 
+    private Toolbar mToolbar;
+    //need to use for every class
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
@@ -50,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
                     //mTextMessage.setText(R.string.title_post);
                     return true;
                 case R.id.navigation_profile:
-                    //mTextMessage.setText(R.string.title_profile);
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this,Profile.class);
+                    startActivity(intent);
                     return true;
             }
             return false;
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //toolbar
+        //toolbar apply to all
         mToolbar=findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         //for test
         Toast.makeText(MainActivity.this,"Trans fragment from "+lastfragment+" to "+index,Toast.LENGTH_LONG).show();
     }
+
 
 
 }
