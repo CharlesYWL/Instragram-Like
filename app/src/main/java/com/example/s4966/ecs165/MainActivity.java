@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         //test();
     }
 
-    public void test(){
+    /*public void test(){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userNode = database.child("users");
         DatabaseReference followsNode = database.child("follows");
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         User.addFollow(followsNode, toby, weili);
         //userNode.removeValue();
         //followsNode.removeValue();
-    }
+    }*/
 
     private void initFragment()
     {
