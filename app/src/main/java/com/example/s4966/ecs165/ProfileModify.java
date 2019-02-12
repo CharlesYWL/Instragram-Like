@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.s4966.ecs165.User.GENDER.FEMALE;
 import static com.example.s4966.ecs165.User.GENDER.MALE;
-import com.example.s4966.ecs165.User.*;
+import com.example.s4966.ecs165.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,6 +34,7 @@ public class ProfileModify extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private StorageReference mStore;
+    User user;
 
 
     private Toolbar mToolbar;
@@ -56,26 +58,30 @@ public class ProfileModify extends AppCompatActivity {
         newName = findViewById(R.id.newName);
         updataB = findViewById(R.id.updata);
         radioGroup = findViewById(R.id.radioGroup);
-        bio = findViewById(R.id.bio_textView);
+        bio = findViewById(R.id.newBio);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStore = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
+
         updataB.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                User.GENDER gender;
+            public void onClick(View view) {
+                 User.GENDER gender;
                 if (radioGroup.getCheckedRadioButtonId() == R.id.radioButtonM) gender = MALE;
                 else gender = FEMALE;
-                User newUser = new User(mUser.getUid(), newName.getText().toString(), bio.getText().toString(), mUser.getEmail().toString(), gender, null);
-                User.updataUser(mDatabase.child("users"), mStore.child("pic"), newUser);
+                //didnt deal with picture
+                 user = new User(mUser.getUid(), newName.getText().toString(), bio.getText().toString(), mUser.getEmail(), gender, null);
+                User.updataUser(mDatabase.child("users"), mStore.child("pic"), user);
+                Intent intent = new Intent();
+                intent.setClass(ProfileModify.this,Profile.class);
+                startActivity(intent);
             }
         });
 
+
     }
-
-
 
 
     //make back Navi on tool bar works

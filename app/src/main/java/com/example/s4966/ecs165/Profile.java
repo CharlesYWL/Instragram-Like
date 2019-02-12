@@ -55,7 +55,7 @@ public class Profile extends AppCompatActivity {
          genderTextView = findViewById(R.id.gender_textView);
          bioTextView= findViewById(R.id.bio_textView);
 
-
+        //it only opearte once per load
          mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
