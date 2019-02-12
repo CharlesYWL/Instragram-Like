@@ -24,8 +24,8 @@ public class AddressBook extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //textView = (TextView) getActivity().findViewById(R.id.message);
-        //textView.setText("This is Addressbook");
+
 
     }
+
 }

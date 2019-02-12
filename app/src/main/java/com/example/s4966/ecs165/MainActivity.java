@@ -10,11 +10,13 @@ import android.support.v7.app.*;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.Menu;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private AddressBook addressbook;
     private Fragment[] fragments;
     private int lastfragment;//用于记录上个选择的Fragment
+    private FirebaseAuth mAuth;
 
     private Toolbar mToolbar;
     //need to use for every class
@@ -76,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         mToolbar=findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //firebase
+        mAuth = FirebaseAuth.getInstance();
+
+
 
         //fargment stuff
         initFragment();
@@ -127,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this,"Trans fragment from "+lastfragment+" to "+index,Toast.LENGTH_LONG).show();
     }
 
+
+    public void searchOnclick(View v){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this,SearchUser.class);
+        startActivity(intent);
+    }
 
 
 }
