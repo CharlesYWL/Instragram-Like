@@ -58,7 +58,7 @@ public class Profile extends AppCompatActivity {
 
 
         //this one listen to toolbar click
- /*       mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch(menuItem.getItemId()){
@@ -73,10 +73,10 @@ public class Profile extends AppCompatActivity {
                 }
                 return false;
             }
-        }); */
+        });
         //make sure it has user
 
-        mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+ /*       mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Toast.makeText(Profile.this,dataSnapshot.getValue().toString(),Toast.LENGTH_LONG).show();
@@ -95,6 +95,7 @@ public class Profile extends AppCompatActivity {
                 //do nothing
             }
         });
+*/
 
 
 
@@ -116,6 +117,10 @@ public class Profile extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(Profile.this,MainActivity.class);
         startActivity(intent);
+    }
+
+    public void UpdataProfile(User user,FirebaseDatabase mFirebase){
+
     }
 
 

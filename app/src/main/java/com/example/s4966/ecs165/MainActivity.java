@@ -109,8 +109,11 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference followsNode = database.child("follows");
         StorageReference storagePicNode = FirebaseStorage.getInstance().getReference().child("pic");
         Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
-        User linsheng = new User("123456789", "linsheng","Excellent student in UCD", "123@ucdavis.edu", User.GENDER.MALE, image);
-        User.addUser(userNode, storagePicNode, linsheng);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        User weili = new User(currentUser.getUid(), "weili","now he is shit", "xlyin@ucdavis.edu", User.GENDER.FEMALE, image);
+        User.updataUser(userNode,storagePicNode,weili);
+        //User.addUser(userNode, storagePicNode, weili);
         /*User yuanbo = new User("yuanbo","bad student in UC Davis", "234@ucdavis.edu", User.GENDER.MALE);
         User weili = new User("weili", "ABC", "abc@ucdavis.edu", User.GENDER.FEMALE);
         User toby = new User("Toby", "who never attend meetings", "toby@ucdavis.edu", User.GENDER.MALE);

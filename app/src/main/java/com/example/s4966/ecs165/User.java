@@ -53,7 +53,7 @@ public class User {
 
     /**
      *
-     * @param id user id
+     * @param id user id, get from user.getUid()
      * @param usernameStr username string
      * @param bioStr bio info string
      * @param emailStr email string
@@ -101,6 +101,14 @@ public class User {
             user.setUid(id);
         }
         user.toFireBase(databaseUserNode, storagePicNode);
+    }
+
+    public static void updataUser(DatabaseReference databaseUserNode, StorageReference storagePicNode, User user){
+        if(!user.hasUID()){
+            String id = databaseUserNode.push().getKey();
+            user.setUid(id);
+        }
+        user.updataFireBase(databaseUserNode,storagePicNode);
     }
 
     public boolean hasUID(){
@@ -151,6 +159,50 @@ public class User {
         }
         databaseUserNode.child(uid).setValue(result);
     }
+
+    private void updataFireBase(DatabaseReference databaseUserNode, StorageReference storageImageNode){
+        if(!hasUID()){
+            Log.e(TAG+=" toFireBase", "try to add to firebase when no uid is assigned.");
+            System.exit(1);
+        }
+
+        if(picture != null) {
+            pictureId = uid;
+            Bitmap bitmap = ((BitmapDrawable)picture).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = storageImageNode.child(pictureId).putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG += " toFireBase function", "upload picture bytes failure.");
+                    System.exit(1);
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    return;
+                }
+            });
+        }
+/*        Map<String, Object> result = new HashMap<>();
+        result.put("username", username);
+        result.put("bio", bio);
+        result.put("email", email);
+        result.put("gender", gender);
+        if(pictureId != null){
+            result.put("pictureId", pictureId);
+        }
+        */
+        databaseUserNode.child(uid).child("username").setValue(username);
+        databaseUserNode.child(uid).child("bio").setValue(bio);
+        databaseUserNode.child(uid).child("email").setValue(email);
+        databaseUserNode.child(uid).child("gender").setValue(gender);
+        if(pictureId != null)
+            databaseUserNode.child(uid).child("pictureId").setValue(pictureId);
+    }
+
 
 
 

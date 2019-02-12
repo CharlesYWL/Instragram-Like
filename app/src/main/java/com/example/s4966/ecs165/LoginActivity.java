@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mToolbar=findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setBackWork(mToolbar);
 
         //Hide progressBar and Text
         progressBar = findViewById(R.id.loginRequestLoadingProgressbar);

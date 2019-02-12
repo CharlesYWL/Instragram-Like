@@ -4,12 +4,35 @@ import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import static com.example.s4966.ecs165.User.GENDER.FEMALE;
+import static com.example.s4966.ecs165.User.GENDER.MALE;
+import com.example.s4966.ecs165.User.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 public class ProfileModify extends AppCompatActivity {
+
+    private TextView newName;
+    private AppCompatButton updataB;
+    private TextView bio;
+    private RadioGroup radioGroup;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private StorageReference mStore;
 
 
     private Toolbar mToolbar;
@@ -29,6 +52,28 @@ public class ProfileModify extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setBackWork(mToolbar);
+
+        newName = findViewById(R.id.newName);
+        updataB = findViewById(R.id.updata);
+        radioGroup = findViewById(R.id.radioGroup);
+        bio = findViewById(R.id.bio_textView);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        updataB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User.GENDER gender;
+                if (radioGroup.getCheckedRadioButtonId()==R.id.radioButtonM) gender =MALE;
+                else gender = FEMALE;
+                User newUser = new User(mUser.getUid(),newName.getText().toString(),bio.getText().toString(),mUser.getEmail(),gender,null);
+                newUser.addUser(mDatabase,mStore,newUser);
+            }
+        });
+
+
+
     }
 
 
