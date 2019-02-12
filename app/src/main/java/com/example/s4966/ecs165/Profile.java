@@ -56,6 +56,19 @@ public class Profile extends AppCompatActivity {
          bioTextView= findViewById(R.id.bio_textView);
 
 
+         mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 User us = dataSnapshot.getValue(User.class);
+                 us.setUid(user.getUid());
+                 updataUI(us);
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+             }
+         });
 
         //this one listen to toolbar click
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -75,27 +88,6 @@ public class Profile extends AppCompatActivity {
             }
         });
         //make sure it has user
-
- /*       mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(Profile.this,dataSnapshot.getValue().toString(),Toast.LENGTH_LONG).show();
-
-                String name = dataSnapshot.child("username").getValue().toString();
-                String gender = dataSnapshot.child("gender").getValue().toString();
-                String bio = dataSnapshot.child("bio").getValue().toString();
-                nameTextView.setText(name);
-                uidTextView.setText(user.getUid());
-                genderTextView.setText(gender);
-                bioTextView.setText(bio);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //do nothing
-            }
-        });
-*/
 
 
 
@@ -119,7 +111,11 @@ public class Profile extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void UpdataProfile(User user,FirebaseDatabase mFirebase){
+    public void updataUI(User user){
+        nameTextView.setText(user.getUsername());
+        bioTextView.setText(user.getBio());
+        uidTextView.setText(user.getUid());
+        genderTextView.setText(user.getGender().toString());
 
     }
 

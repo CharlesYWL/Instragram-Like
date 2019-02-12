@@ -21,7 +21,7 @@ import java.util.Map;
 public class User {
     public enum GENDER {MALE, FEMALE}
 
-    private String uid;
+    private String uid ;
     private String username;
     private String bio;
     private String email;
@@ -41,7 +41,7 @@ public class User {
      * @param gen gender
      * @param pic: If there is no picture for the user, please pass null
      */
-    public User(String usernameStr, String bioStr, String emailStr, GENDER gen, Drawable pic){
+   /* public User(String usernameStr, String bioStr, String emailStr, GENDER gen, Drawable pic){
         uid = "";
         username = usernameStr;
         bio = bioStr;
@@ -49,7 +49,7 @@ public class User {
         gender = gen;
         picture = pic;
         pictureId = null;
-    }
+    }*/
 
     /**
      *
@@ -69,11 +69,33 @@ public class User {
         picture = pic;
         pictureId = null;
     }
-
+    public User(){}
 
     public String getUsername(){
         return username;
     }
+
+    public boolean hasUID(){
+        return uid != "";
+    }
+
+    public void setUid(String id){
+        uid = id;
+    }
+
+    public String getUid(){
+        return uid;
+    }
+
+    public String getBio(){
+        return bio;
+    }
+
+    public String getEmail(){return email;}
+
+    public GENDER getGender(){return gender;}
+
+    public String getPictureId(){return pictureId;}
 
 
     public static void addFollow(DatabaseReference databaseFollowsNode, User follow, User followed){
@@ -111,17 +133,35 @@ public class User {
         user.updataFireBase(databaseUserNode,storagePicNode);
     }
 
-    public boolean hasUID(){
-        return uid != "";
+    //cannot run for some reasons
+    public void getUserFromFireBase(final DatabaseReference databaseUserNode, final StorageReference storagePicNode, String Uid){
+
+        databaseUserNode.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User u = dataSnapshot.getValue(User.class);
+                username = u.username;
+                uid = u.uid;
+                bio = u.bio;
+                email = u.email;
+                gender = u.gender;
+                pictureId = u.pictureId;
+ /*               username = dataSnapshot.child("username").getValue().toString();
+                bio = dataSnapshot.child("bio").getValue().toString();
+                email = dataSnapshot.child("email").getValue().toString();
+                gender = (User.GENDER)dataSnapshot.child("gender").getValue();
+                uid = dataSnapshot.getRef().getKey();
+                //dont know how to deal with download picture
+ //               pic = (Drawable) storagePicNode.getDownloadUrl();*/
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {//donothing
+            }
+        });
     }
 
-    public void setUid(String id){
-        uid = id;
-    }
 
-    public String getUid(){
-        return uid;
-    }
 
     private void toFireBase(DatabaseReference databaseUserNode, StorageReference storageImageNode){
         if(!hasUID()){
@@ -186,7 +226,8 @@ public class User {
                 }
             });
         }
-/*        Map<String, Object> result = new HashMap<>();
+
+        Map<String, Object> result = new HashMap<>();
         result.put("username", username);
         result.put("bio", bio);
         result.put("email", email);
@@ -194,13 +235,8 @@ public class User {
         if(pictureId != null){
             result.put("pictureId", pictureId);
         }
-        */
-        databaseUserNode.child(uid).child("username").setValue(username);
-        databaseUserNode.child(uid).child("bio").setValue(bio);
-        databaseUserNode.child(uid).child("email").setValue(email);
-        databaseUserNode.child(uid).child("gender").setValue(gender);
-        if(pictureId != null)
-            databaseUserNode.child(uid).child("pictureId").setValue(pictureId);
+        databaseUserNode.child(uid).updateChildren(result);
+
     }
 
 

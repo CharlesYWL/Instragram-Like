@@ -111,8 +111,12 @@ public class MainActivity extends AppCompatActivity {
         Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        User weili = new User(currentUser.getUid(), "weili","now he is shit", "xlyin@ucdavis.edu", User.GENDER.FEMALE, image);
-        User.updataUser(userNode,storagePicNode,weili);
+  //      User weili = new User();
+  //      weili.getUserFromFireBase(userNode,storagePicNode,currentUser.getUid());
+  //      Toast.makeText(MainActivity.this,weili.getUsername().toString(),Toast.LENGTH_LONG).show();
+
+ //       User weili = new User(currentUser.getUid(), "weilAi yin"," shit", "xlyin@ucdavis.edu", User.GENDER.MALE, image);
+ //      User.updataUser(userNode,storagePicNode,weili);
         //User.addUser(userNode, storagePicNode, weili);
         /*User yuanbo = new User("yuanbo","bad student in UC Davis", "234@ucdavis.edu", User.GENDER.MALE);
         User weili = new User("weili", "ABC", "abc@ucdavis.edu", User.GENDER.FEMALE);

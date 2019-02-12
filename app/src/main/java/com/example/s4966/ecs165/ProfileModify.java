@@ -58,6 +58,7 @@ public class ProfileModify extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         bio = findViewById(R.id.bio_textView);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mStore = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -65,14 +66,12 @@ public class ProfileModify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 User.GENDER gender;
-                if (radioGroup.getCheckedRadioButtonId()==R.id.radioButtonM) gender =MALE;
+                if (radioGroup.getCheckedRadioButtonId() == R.id.radioButtonM) gender = MALE;
                 else gender = FEMALE;
-                User newUser = new User(mUser.getUid(),newName.getText().toString(),bio.getText().toString(),mUser.getEmail(),gender,null);
-                newUser.addUser(mDatabase,mStore,newUser);
+                User newUser = new User(mUser.getUid(), newName.getText().toString(), bio.getText().toString(), mUser.getEmail().toString(), gender, null);
+                User.updataUser(mDatabase.child("users"), mStore.child("pic"), newUser);
             }
         });
-
-
 
     }
 
@@ -102,5 +101,6 @@ public class ProfileModify extends AppCompatActivity {
         intent.setClass(ProfileModify.this,ChangePassword.class);
         startActivity(intent);
     }
+
 
 }
