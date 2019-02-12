@@ -16,6 +16,7 @@
         <activity android:name=".ProfileModify"></activity>
         <activity android:name=".PictureChange" />
         <activity android:name=".Profile" />
+        <activity android:name=".SignUp"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">

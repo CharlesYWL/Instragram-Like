@@ -6,9 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
-
-public class ProfileModify extends AppCompatActivity {
-
+public class SignUp extends LoginActivity{
 
     private Toolbar mToolbar;
     //need to use for every class
@@ -20,7 +18,7 @@ public class ProfileModify extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_modify);
+        setContentView(R.layout.activity_register);
 
         //toolbar apply to all
         mToolbar=findViewById(R.id.toolbar);
@@ -41,5 +39,4 @@ public class ProfileModify extends AppCompatActivity {
             }
         });
     }
-
 }
