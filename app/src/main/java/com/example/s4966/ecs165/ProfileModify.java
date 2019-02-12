@@ -1,5 +1,6 @@
 package com.example.s4966.ecs165;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,12 +46,16 @@ public class ProfileModify extends AppCompatActivity {
 
     //when Click on Picture
     public void changePic(View v){
-
+        Intent intent = new Intent();
+        intent.setClass(ProfileModify.this,PictureChange.class);
+        startActivity(intent);
     }
 
     //when click on ChangePassword
     public void changePassword(View v){
-
+        Intent intent = new Intent();
+        intent.setClass(ProfileModify.this,ChangePassword.class);
+        startActivity(intent);
     }
 
 }

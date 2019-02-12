@@ -53,10 +53,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return true;
                 case R.id.navigation_post:
-                    //mTextMessage.setText(R.string.title_post);
-                    //test login only
                     Intent intent = new Intent();
-                    intent.setClass(MainActivity.this,LoginActivity.class);
+                    intent.setClass(MainActivity.this,Post.class);
                     startActivity(intent);
                     return true;
                 case R.id.navigation_profile:

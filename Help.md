@@ -128,3 +128,28 @@ public boolean onCreateOptionsMenu(Menu menu) {
     return super.onCreateOptionsMenu(menu);
 }
 ```
+## ToolBar
+```java
+//in class
+private Toolbar mToolbar;
+//need to use for every class
+public boolean onCreateOptionsMenu(Menu menu){
+    getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
+    return true;
+}
+//in OnCreate
+//toolbar apply to all
+mToolbar=findViewById(R.id.toolbar);
+setSupportActionBar(mToolbar);
+getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+setBackWork(mToolbar);
+//extar function
+public void setBackWork(Toolbar tb){
+    tb.setNavigationOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    });
+}
+```

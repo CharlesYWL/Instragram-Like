@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
-public class ChangePassword extends AppCompatActivity {
+public class Post extends AppCompatActivity {
 
     private Toolbar mToolbar;
     //need to use for every class
@@ -14,23 +14,19 @@ public class ChangePassword extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
         return true;
     }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_password);
+        setContentView(R.layout.activity_post);
 
-        //toolbar apply to all
         mToolbar=findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setBackWork(mToolbar);
+
     }
 
-
-
-    //make back Navi on tool bar works
+    //extar function
     public void setBackWork(Toolbar tb){
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,4 +35,13 @@ public class ChangePassword extends AppCompatActivity {
             }
         });
     }
+
+    public void changeLocation(View v){
+
+    }
+
+    public void changePrivcy(View v){
+
+    }
+
 }
