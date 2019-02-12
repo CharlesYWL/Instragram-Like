@@ -1,6 +1,10 @@
 package com.example.s4966.ecs165;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +17,8 @@ import android.view.View;
 import android.widget.*;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.*;
 
+import java.util.concurrent.Semaphore;
 
 
 public class Profile extends AppCompatActivity {
@@ -65,20 +72,42 @@ public class Profile extends AppCompatActivity {
          bioTextView= findViewById(R.id.bio_textView);
          imageView = findViewById(R.id.pic_imageview);
 
-        //it only opearte once per load
+         //it only opearte once per load
+         // test
+         //mDatabase.child("users").child("lol3sS2S0TNy9vq4s90OBT0fxkC2").addListenerForSingleValueEvent(new ValueEventListener() {
          mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 User us = dataSnapshot.getValue(User.class);
-                 us.setUid(user.getUid());
-                 updataUI(us);
-             }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String username = (String) dataSnapshot.child("username").getValue();
+                String bio = (String) dataSnapshot.child("bio").getValue();
+                String email = (String) dataSnapshot.child("email").getValue();
+                User.GENDER gender = ((String) dataSnapshot.child("gender").getValue() == "MALE") ? User.GENDER.MALE : User.GENDER.FEMALE;
+                final User us = new User(user.getUid(),username, bio, email, gender, null);
 
-             @Override
-             public void onCancelled(@NonNull DatabaseError databaseError) {
+                if (dataSnapshot.child("pictureId").exists()) {
+                    final Semaphore semaphore = new Semaphore(1);
+                    final String pictureId = (String) dataSnapshot.child("pictureId").getValue();
+                    // TODO there is a hard image size limit, may fix it in future.
+                    final long TEN_MEGABYTE = 10 * 1024 * 1024;
+                    StorageReference storagePicNode = storageReference.child("pic");
+                    storagePicNode.child(pictureId).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            imageView.setImageBitmap(bmp);
+                        }
+                    });
+                }
 
-             }
-         });
+                us.setUid(user.getUid());
+                updataUI(us);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //this one listen to toolbar click
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -126,7 +155,8 @@ public class Profile extends AppCompatActivity {
         bioTextView.setText(user.getBio());
         uidTextView.setText(user.getUid());
         genderTextView.setText(user.getGender().toString());
-        //need dealwith photo
+        //TODO need dealwith photo
+        imageView.setImageDrawable(user.getPicture());
 //        GlideApp.with(this).load(storageReference.child("pic").getDownloadUrl()).into(imageView);
 
     }

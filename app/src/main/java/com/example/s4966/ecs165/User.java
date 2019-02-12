@@ -79,6 +79,15 @@ public class User {
         return uid != "";
     }
 
+    public void setPicture(String picId, Drawable pic){
+        pictureId = picId;
+        picture=pic;
+    }
+
+    public Drawable getPicture(){
+        return picture;
+    }
+
     public void setUid(String id){
         uid = id;
     }
