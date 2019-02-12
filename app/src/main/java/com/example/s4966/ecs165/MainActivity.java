@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     private  HomePage homepage;
@@ -81,6 +84,29 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //test();
+    }
+
+    public void test(){
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userNode = database.child("users");
+        DatabaseReference followsNode = database.child("follows");
+        User linsheng = new User("linsheng","excellent student in UC Davis", "123@ucdavis.edu", User.GENDER.MALE);
+        User yuanbo = new User("yuanbo","bad student in UC Davis", "234@ucdavis.edu", User.GENDER.MALE);
+        User weili = new User("weili", "ABC", "abc@ucdavis.edu", User.GENDER.FEMALE);
+        User toby = new User("Toby", "who never attend meetings", "toby@ucdavis.edu", User.GENDER.MALE);
+        User.addUser(userNode, linsheng);
+        User.addUser(userNode, yuanbo);
+        User.addUser(userNode, weili);
+        User.addUser(userNode, toby);
+        User.addFollow(followsNode, yuanbo, linsheng);
+        User.addFollow(followsNode, weili, linsheng);
+        User.addFollow(followsNode, toby, linsheng);
+        User.addFollow(followsNode, toby, yuanbo);
+        User.addFollow(followsNode, toby, weili);
+        //userNode.removeValue();
+        //followsNode.removeValue();
     }
 
     private void initFragment()

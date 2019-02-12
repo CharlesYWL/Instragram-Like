@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //progress Bar
         progressBar = findViewById(R.id.loginRequestLoadingProgressbar);
-        progressBar.setVisibility();
+        progressBar.setVisibility(View.GONE);
 
         //init mAuth
         mAuth = FirebaseAuth.getInstance();
