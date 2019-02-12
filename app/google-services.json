@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:811106133904:android:b37ffdca97e58106",
+        "android_client_info": {
+          "package_name": "com.example.databasemodel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811106133904-ddccbsa3qmu80nihd47nasmfu8jegl3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.databasemodel",
+            "certificate_hash": "7cc2df24546995fab5ed6ba44292d507706bdee6"
+          }
+        },
+        {
+          "client_id": "811106133904-7hsi78b4hr82vd4f5d249u11befki20q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdhyMf7lWnT9yiSDhlXi2fTz7K9P356mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811106133904-7hsi78b4hr82vd4f5d249u11befki20q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:811106133904:android:7feb86c37bd24252",
         "android_client_info": {
           "package_name": "com.example.s4966.ecs165"
@@ -28,6 +72,14 @@
           "android_info": {
             "package_name": "com.example.s4966.ecs165",
             "certificate_hash": "7af84a55eb62250004dd6bd84182296bc4053287"
+          }
+        },
+        {
+          "client_id": "811106133904-n0trjrtf93kfg239mg6c5vblso60561c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.s4966.ecs165",
+            "certificate_hash": "7cc2df24546995fab5ed6ba44292d507706bdee6"
           }
         },
         {

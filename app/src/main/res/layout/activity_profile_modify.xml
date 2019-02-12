@@ -57,7 +57,7 @@
                     android:layout_weight="0.01"
                     android:clickable="true"
                     android:onClick="changePic"
-                    tools:srcCompat="@drawable/sixsixsix" />
+                    android:src="@drawable/sixsixsix" />
             </LinearLayout>
 
             <LinearLayout
@@ -151,7 +151,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -160,7 +160,9 @@
         android:layout_marginEnd="162dp"
         android:layout_marginBottom="3dp"
         android:gravity="center_vertical"
+        android:padding="16dp"
         android:text="Updata"
+        android:background="@drawable/white_rounded_button"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

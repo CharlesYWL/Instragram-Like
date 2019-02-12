@@ -50,7 +50,7 @@
                     android:layout_height="60dp"
                     android:layout_weight="0"
                     android:layout_marginEnd="20dp"
-                    tools:srcCompat="@tools:sample/avatars[6]"
+                    tools:src="@tools:sample/avatars[6]"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -174,8 +174,11 @@
         android:text="Log Out"
         android:textColor="@color/red"
         android:textSize="28sp"
+        android:background="@drawable/white_rounded_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:clickable="true"
+        android:onClick="logout"/>
 
 </android.support.constraint.ConstraintLayout>

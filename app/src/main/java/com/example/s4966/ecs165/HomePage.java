@@ -10,7 +10,6 @@ import android.widget.*;
 
 public class HomePage extends Fragment {
 
-    private TextView textView;
 
     @Nullable
     @Override
@@ -22,8 +21,7 @@ public class HomePage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //textView = (TextView) getActivity().findViewById(R.id.message);
-        //textView.setText("This is HomePage");
+
 
     }
 }

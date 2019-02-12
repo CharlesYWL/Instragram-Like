@@ -3,11 +3,14 @@ package com.example.s4966.ecs165;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Profile extends AppCompatActivity {
 
@@ -17,6 +20,7 @@ public class Profile extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
+    private ImageButton SignoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,9 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+
     }
+
 
     //make back Navi on tool bar works
     public void setBackWork(Toolbar tb){
@@ -57,6 +63,13 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void logout(View v){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent();
+        intent.setClass(Profile.this,MainActivity.class);
+        startActivity(intent);
     }
 
 

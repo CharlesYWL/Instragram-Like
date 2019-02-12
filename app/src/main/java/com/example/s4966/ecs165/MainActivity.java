@@ -17,6 +17,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -81,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //firebase
         mAuth = FirebaseAuth.getInstance();
-
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+        } else
+            Toast.makeText(MainActivity.this,"User: "+ currentUser.getUid(),Toast.LENGTH_LONG).show();
 
 
         //fargment stuff
