@@ -51,6 +51,25 @@ public class User {
         pictureId = null;
     }
 
+    /**
+     *
+     * @param id user id
+     * @param usernameStr username string
+     * @param bioStr bio info string
+     * @param emailStr email string
+     * @param gen gender
+     * @param pic picture drawable class, if not exist, please specify null.
+     */
+    public User(String id, String usernameStr, String bioStr, String emailStr, GENDER gen, Drawable pic){
+        uid = id;
+        username = usernameStr;
+        bio = bioStr;
+        email = emailStr;
+        gender = gen;
+        picture = pic;
+        pictureId = null;
+    }
+
 
     public String getUsername(){
         return username;

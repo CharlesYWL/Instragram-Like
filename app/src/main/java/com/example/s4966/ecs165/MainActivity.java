@@ -1,6 +1,7 @@
 package com.example.s4966.ecs165;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,15 +100,18 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        //test();
+        test();
     }
 
-    /*public void test(){
+    public void test(){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userNode = database.child("users");
         DatabaseReference followsNode = database.child("follows");
-        User linsheng = new User("linsheng","excellent student in UC Davis", "123@ucdavis.edu", User.GENDER.MALE);
-        User yuanbo = new User("yuanbo","bad student in UC Davis", "234@ucdavis.edu", User.GENDER.MALE);
+        StorageReference storagePicNode = FirebaseStorage.getInstance().getReference().child("pic");
+        Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
+        User linsheng = new User("123456789", "linsheng","Excellent student in UCD", "123@ucdavis.edu", User.GENDER.MALE, image);
+        User.addUser(userNode, storagePicNode, linsheng);
+        /*User yuanbo = new User("yuanbo","bad student in UC Davis", "234@ucdavis.edu", User.GENDER.MALE);
         User weili = new User("weili", "ABC", "abc@ucdavis.edu", User.GENDER.FEMALE);
         User toby = new User("Toby", "who never attend meetings", "toby@ucdavis.edu", User.GENDER.MALE);
         User.addUser(userNode, linsheng);
@@ -117,9 +123,10 @@ public class MainActivity extends AppCompatActivity {
         User.addFollow(followsNode, toby, linsheng);
         User.addFollow(followsNode, toby, yuanbo);
         User.addFollow(followsNode, toby, weili);
+        */
         //userNode.removeValue();
         //followsNode.removeValue();
-    }*/
+    }
 
     private void initFragment()
     {
