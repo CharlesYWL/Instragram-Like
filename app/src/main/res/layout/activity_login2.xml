@@ -28,7 +28,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +71,9 @@
             android:gravity="center"
             android:textSize="16dp"
             android:id="@+id/link_signup"
-            android:textColor="@color/link_blue"/>
+            android:textColor="@color/link_blue"
+            android:onClick="registerClick"
+            android:clickable="true"/>
 
     </LinearLayout>
 
