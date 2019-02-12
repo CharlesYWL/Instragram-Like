@@ -83,14 +83,4 @@
         android:id="@+id/loginRequestLoadingProgressbar"
         android:layout_centerInParent="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/please_wait"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_alignBottom="@+id/loginRequestLoadingProgressbar"
-        android:layout_alignRight="@+id/loginRequestLoadingProgressbar"
-        android:layout_alignLeft="@+id/loginRequestLoadingProgressbar"/>
-
 </RelativeLayout>

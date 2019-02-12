@@ -98,9 +98,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setBackWork(mToolbar);
 
-        //progress Bar
+        //Hide progressBar and Text
         progressBar = findViewById(R.id.loginRequestLoadingProgressbar);
-        progressBar.setVisibility();
+        progressBar.setVisibility(View.GONE);
 
         //init mAuth
         mAuth = FirebaseAuth.getInstance();

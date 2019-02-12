@@ -13,10 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".ProfileModify"></activity>
+        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".ProfileModify" />
         <activity android:name=".PictureChange" />
         <activity android:name=".Profile" />
-        <activity android:name=".SignUp"/>
+        <activity android:name=".SignUp" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">

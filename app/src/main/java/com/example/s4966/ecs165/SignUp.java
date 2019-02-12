@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ProgressBar;
 
 public class SignUp extends LoginActivity{
+
+    private ProgressBar progressBar;
 
     private Toolbar mToolbar;
     //need to use for every class
@@ -25,6 +28,11 @@ public class SignUp extends LoginActivity{
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setBackWork(mToolbar);
+        //Hide ProgressBar
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
+
     }
 
 

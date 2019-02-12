@@ -1,5 +1,6 @@
 package com.example.s4966.ecs165;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +41,16 @@ public class ProfileModify extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    //when Click on Picture
+    public void changePic(View v){
+
+    }
+
+    //when click on ChangePassword
+    public void changePassword(View v){
+
     }
 
 }
