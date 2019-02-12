@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.*;
+
+
 
 public class Profile extends AppCompatActivity {
 
@@ -31,10 +37,12 @@ public class Profile extends AppCompatActivity {
     private ImageButton SignoutButton;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
+    private StorageReference storageReference;
     private TextView nameTextView;
     private TextView uidTextView;
     private TextView genderTextView;
     private TextView bioTextView;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +58,12 @@ public class Profile extends AppCompatActivity {
         //init all thing
          mDatabase = FirebaseDatabase.getInstance().getReference();
          user = FirebaseAuth.getInstance().getCurrentUser();
+         storageReference = FirebaseStorage.getInstance().getReference();
          nameTextView = findViewById(R.id.name_textView);
          uidTextView = findViewById(R.id.uid_textView);
          genderTextView = findViewById(R.id.gender_textView);
          bioTextView= findViewById(R.id.bio_textView);
+         imageView = findViewById(R.id.pic_imageview);
 
         //it only opearte once per load
          mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -116,6 +126,8 @@ public class Profile extends AppCompatActivity {
         bioTextView.setText(user.getBio());
         uidTextView.setText(user.getUid());
         genderTextView.setText(user.getGender().toString());
+        //need dealwith photo
+//        GlideApp.with(this).load(storageReference.child("pic").getDownloadUrl()).into(imageView);
 
     }
 

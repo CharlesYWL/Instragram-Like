@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setClass(MainActivity.this,LoginActivity.class);
             startActivity(intent);
         } else
-            Toast.makeText(MainActivity.this,"User: "+ currentUser.getUid(),Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"User: "+ currentUser.getDisplayName(),Toast.LENGTH_LONG).show();
 
 
         //fargment stuff
