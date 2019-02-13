@@ -95,7 +95,7 @@
             android:textSize="16dp"
             android:id="@+id/forgetpass"
             android:textColor="@color/link_blue"
-            android:onClick="forgetClick"
+            android:onClick="registerClick"
             android:clickable="true"/>
 
     </LinearLayout>
