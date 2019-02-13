@@ -7,8 +7,13 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.*;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -143,31 +148,20 @@ public class User {
     }
 
     //cannot run for some reasons
-    public void getUserFromFireBase(final DatabaseReference databaseUserNode, final StorageReference storagePicNode, String Uid){
+    public static void getUserFromFireBase(final DatabaseReference databaseUserNode, final StorageReference storagePicNode, String Uid, User u){
 
         databaseUserNode.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User u = dataSnapshot.getValue(User.class);
-                username = u.username;
-                uid = u.uid;
-                bio = u.bio;
-                email = u.email;
-                gender = u.gender;
-                pictureId = u.pictureId;
- /*               username = dataSnapshot.child("username").getValue().toString();
-                bio = dataSnapshot.child("bio").getValue().toString();
-                email = dataSnapshot.child("email").getValue().toString();
-                gender = (User.GENDER)dataSnapshot.child("gender").getValue();
-                uid = dataSnapshot.getRef().getKey();
-                //dont know how to deal with download picture
- //               pic = (Drawable) storagePicNode.getDownloadUrl();*/
+                User us = dataSnapshot.getValue(User.class);
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {//donothing
             }
         });
+
     }
 
 
@@ -207,6 +201,18 @@ public class User {
             result.put("pictureId", pictureId);
         }
         databaseUserNode.child(uid).setValue(result);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .setPhotoUri(Uri.parse("gs://pic/"+pictureId))
+                .build();
+        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                    Log.d(TAG, "User profile update.");
+            }
+        });
     }
 
     private void updataFireBase(DatabaseReference databaseUserNode, StorageReference storageImageNode){
@@ -245,6 +251,19 @@ public class User {
             result.put("pictureId", pictureId);
         }
         databaseUserNode.child(uid).updateChildren(result);
+        //test for updataProfile
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .setPhotoUri(Uri.parse("gs://pic/"+pictureId))
+                .build();
+        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                    Log.d(TAG, "User profile update.");
+            }
+        });
 
     }
 
