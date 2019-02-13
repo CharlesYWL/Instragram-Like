@@ -153,3 +153,13 @@ public void setBackWork(Toolbar tb){
     });
 }
 ```
+## 延时器
+```java
+new Handler().postDelayed(new Runnable() {
+    @Override
+    public void run() {
+        Intent intent= new Intent(ResetPassword.this,LoginActivity.class);
+        startActivity(intent);
+    }
+},1000);
+```

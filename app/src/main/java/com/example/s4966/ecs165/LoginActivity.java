@@ -436,7 +436,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void forgetClick(View v){
-        //TODO need to full fill it
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this,ResetPassword.class);
+        startActivity(intent);
     }
 }
 
