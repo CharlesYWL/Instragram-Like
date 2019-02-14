@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setClass(MainActivity.this,LoginActivity.class);
             startActivity(intent);
         } else
-            Toast.makeText(MainActivity.this,"User: "+ currentUser.getEmail(),Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"User: "+ currentUser.getDisplayName(),Toast.LENGTH_LONG).show();
 
 
         //fargment stuff
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-  //      User weili = new User();
   //      weili.getUserFromFireBase(userNode,storagePicNode,currentUser.getUid());
   //      Toast.makeText(MainActivity.this,weili.getUsername().toString(),Toast.LENGTH_LONG).show();
 
