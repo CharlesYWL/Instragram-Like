@@ -44,9 +44,11 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
+import com.google.firebase.auth.GoogleAuthProvider;
 /**
  * A login screen that offers login via email/password.
  */
@@ -103,8 +105,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         progressBar = findViewById(R.id.loginRequestLoadingProgressbar);
         progressBar.setVisibility(View.GONE);
 
-        //init mAuth
+        //init mAuth & google sign in
         mAuth = FirebaseAuth.getInstance();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -439,6 +446,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this,ResetPassword.class);
         startActivity(intent);
+    }
+
+    public void googleSignin(View v){
+        Intent signInIntent =
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 }
 
