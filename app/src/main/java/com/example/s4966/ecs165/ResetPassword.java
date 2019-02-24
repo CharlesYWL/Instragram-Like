@@ -23,7 +23,7 @@ public class ResetPassword extends AppCompatActivity {
     private Toolbar mToolbar;
     //need to use for every class
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
         return true;
     }
 
