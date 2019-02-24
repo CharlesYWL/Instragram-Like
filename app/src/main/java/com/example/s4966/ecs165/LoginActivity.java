@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -56,6 +57,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -497,8 +503,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInViaGoogle:success");
+                            //get Reffferences and add to user
                             FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference userRef = database.getReference().child("users").child(user.getUid());
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            StorageReference storageReference = storage.getReference().child("pic");
+                            //[done with ref]
+                            Drawable userPic = downloadPhotoToFirebase(user,storageReference);
+                            User newUser = new User(user.getUid(),user.getDisplayName(),"",user.getEmail()
+                                    ,User.GENDER.UNKNOW,userPic);
                             progressBar.setVisibility(View.GONE);
+                            User.updataUser(userRef,storageReference,newUser);
                             Intent intent = new Intent();
                             intent.setClass(LoginActivity.this,MainActivity.class);
                         } else {
@@ -512,5 +528,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 });
     }
     // [END auth_with_google]
+
+/**
+ * it download for google users' photo
+ * and stored in FirebaseStorage.pic.uid
+ * as Uid
+ */
+    public Drawable downloadPhotoToFirebase(FirebaseUser user,StorageReference storageReference)
+    {
+        return null;
+    }
 }
 

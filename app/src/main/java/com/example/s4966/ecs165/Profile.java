@@ -81,7 +81,18 @@ public class Profile extends AppCompatActivity {
                 String username = (String) dataSnapshot.child("username").getValue();
                 String bio = (String) dataSnapshot.child("bio").getValue();
                 String email = (String) dataSnapshot.child("email").getValue();
-                User.GENDER gender = ((String) dataSnapshot.child("gender").getValue() == "MALE") ? User.GENDER.MALE : User.GENDER.FEMALE;
+                User.GENDER gender = User.GENDER.UNKNOW;
+                switch (dataSnapshot.child("gender").getValue().toString()){
+                    case "MALE":
+                        gender = User.GENDER.MALE;
+                        break;
+                    case "FEMALE":
+                        gender = User.GENDER.FEMALE;
+                        break;
+                    case "UNKNOW":
+                        gender = User.GENDER.UNKNOW;
+                        break;
+                }
                 final User us = new User(user.getUid(),username, bio, email, gender, null);
 
                 if (dataSnapshot.child("pictureId").exists()) {
@@ -153,7 +164,19 @@ public class Profile extends AppCompatActivity {
         nameTextView.setText(user.getUsername());
         bioTextView.setText(user.getBio());
         uidTextView.setText(user.getUid());
-        genderTextView.setText(user.getGender().toString());
+        String g="\0";
+        switch (user.getGender()){
+            case MALE:
+                g = "MALE";
+                break;
+            case FEMALE:
+                g = "FEMALE";
+                break;
+            case UNKNOW:
+                g = "UNKNOW";
+                break;
+        }
+        genderTextView.setText(g);
         //TODO need dealwith photo
         imageView.setImageDrawable(user.getPicture());
 //        GlideApp.with(this).load(storageReference.child("pic").getDownloadUrl()).into(imageView);

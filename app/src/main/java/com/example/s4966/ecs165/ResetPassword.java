@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -58,7 +59,7 @@ public class ResetPassword extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Log.d(TAG, "Email sent.");
                                     Toast.makeText(ResetPassword.this,"Email sent",Toast.LENGTH_SHORT).show();
-                                    new Handler().postDelayed(new Runnable() {
+                                    new Handler().postDelayed(new Runnable() {//delay function
                                         @Override
                                         public void run() {
                                             Intent intent= new Intent(ResetPassword.this,LoginActivity.class);
@@ -73,7 +74,10 @@ public class ResetPassword extends AppCompatActivity {
     }
 
 
-
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
 
 
     public void setBackWork(Toolbar tb){

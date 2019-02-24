@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    public enum GENDER {MALE, FEMALE}
+    public enum GENDER {MALE, FEMALE,UNKNOW}
 
     private String uid ;
     private String username;
@@ -148,6 +148,7 @@ public class User {
     }
 
     //cannot run for some reasons
+    //TODO fix it
     public static void getUserFromFireBase(final DatabaseReference databaseUserNode, final StorageReference storagePicNode, String Uid, User u){
 
         databaseUserNode.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
