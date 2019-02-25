@@ -19,7 +19,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,6 +95,8 @@ public class User {
     public void setUid(String id){
         uid = id;
     }
+
+    public void setUsername(String name){username = name;}
 
     public String getUid(){
         return uid;
