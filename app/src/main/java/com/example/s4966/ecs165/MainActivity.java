@@ -51,12 +51,14 @@ public class MainActivity extends AppCompatActivity {
                     if(lastfragment!=0){
                     switchFragment(lastfragment,0);
                     lastfragment=0;
+                    getSupportActionBar().setTitle("Feed");
                     }
                     return true;
                 case R.id.navigation_addressbook:
                     if(lastfragment!=1){
                     switchFragment(lastfragment,1);
                     lastfragment=1;
+                    getSupportActionBar().setTitle("Addressbook");
                     }
                     return true;
                 case R.id.navigation_post:

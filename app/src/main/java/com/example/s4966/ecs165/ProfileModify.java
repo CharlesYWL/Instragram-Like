@@ -113,8 +113,9 @@ public class ProfileModify extends AppCompatActivity {
     }
 
 
-    //make back Navi on tool bar works
+    //make back Navi on tool bar works and othersetting about tool bars
     public void setBackWork(Toolbar tb){
+        getSupportActionBar().setTitle("Account setting");
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +138,7 @@ public class ProfileModify extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //updata info.
     public void updataUI(User user){
         newName.setText(user.getUsername());
         bio.setText(user.getBio());

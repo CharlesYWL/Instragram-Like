@@ -118,7 +118,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //toolbar apply to all
         mToolbar=findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setTitle("Login");
 
         //Hide progressBar and Text
         progressBar = findViewById(R.id.loginRequestLoadingProgressbar);
@@ -467,6 +468,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivity(intent);
     }
 
+    /**
+     * TODO: BUG!
+     *      After Signin & Signout, ReSignin
+     *      Will not popup select account pages
+     */
     public void googleSignin(View v){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);

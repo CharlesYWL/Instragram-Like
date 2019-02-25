@@ -151,6 +151,7 @@ public class Profile extends AppCompatActivity {
 
     //make back Navi on tool bar works and direction
     public void setBackWork(Toolbar tb){
+        getSupportActionBar().setTitle("Profile");
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +190,10 @@ public class Profile extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Profile.this,MainActivity.class));
+    }
 
 }
 
