@@ -57,8 +57,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -89,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private TextView inviText;
     private View mProgressView;
     private View mLoginFormView;
     private FirebaseAuth mAuth;
@@ -150,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 //        mLoginFormView = findViewById(R.id.login_form);
 //        mProgressView = findViewById(R.id.login_progress);
-
+        inviText = findViewById(R.id.inviText);
 
 
     }
@@ -466,6 +470,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void googleSignin(View v){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent().setClass(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
     }
     //above Google Signin
     @Override
@@ -506,17 +515,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             //get Reffferences and add to user
                             FirebaseUser user = mAuth.getCurrentUser();
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference userRef = database.getReference().child("users").child(user.getUid());
+                            DatabaseReference userRef = database.getReference().child("users");
                             FirebaseStorage storage = FirebaseStorage.getInstance();
                             StorageReference storageReference = storage.getReference().child("pic");
                             //[done with ref]
-                            Drawable userPic = downloadPhotoToFirebase(user,storageReference);
-                            User newUser = new User(user.getUid(),user.getDisplayName(),"",user.getEmail()
-                                    ,User.GENDER.UNKNOW,userPic);
+                            //first time google login init
+                            if(checkIfUserExits(user.getUid())==false) {
+                                Drawable userPic = downloadPhotoToFirebase(user, storageReference);
+                                User newUser = new User(user.getUid(), user.getDisplayName(), "", user.getEmail()
+                                        , User.GENDER.UNKNOW, userPic);
+                                User.updataUser(userRef, storageReference, newUser);
+                            }
+                            //otherwise no need to add user
                             progressBar.setVisibility(View.GONE);
-                            User.updataUser(userRef,storageReference,newUser);
                             Intent intent = new Intent();
                             intent.setClass(LoginActivity.this,MainActivity.class);
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInViaGoogle:failure", task.getException());
@@ -538,5 +552,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     {
         return null;
     }
+
+    public boolean checkIfUserExits(final String uid){
+        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference().child("users");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(uid))
+                    inviText.setText("1");
+                else
+                    inviText.setText("0");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        boolean rs = true;
+        switch (inviText.getText().toString()) {
+            case "1":
+                rs = true;
+                break;
+            case "0":
+                rs = false;
+                break;
+        }
+        return rs;
+    }
+
 }
 

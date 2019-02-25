@@ -72,9 +72,14 @@ public class Profile extends AppCompatActivity {
          bioTextView= findViewById(R.id.bio_textView);
          imageView = findViewById(R.id.pic_imageview);
 
+         if(user == null) { // for some rare case
+             Intent intent = new Intent().setClass(Profile.this,LoginActivity.class);
+             startActivity(intent);
+         }
          //it only opearte once per load
          // test
-         //mDatabase.child("users").child("lol3sS2S0TNy9vq4s90OBT0fxkC2").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        //[command start]
          mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -118,6 +123,7 @@ public class Profile extends AppCompatActivity {
 
             }
         });
+        //[command end]
 
         //this one listen to toolbar click
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
