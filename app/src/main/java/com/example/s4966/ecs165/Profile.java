@@ -149,12 +149,12 @@ public class Profile extends AppCompatActivity {
     }
 
 
-    //make back Navi on tool bar works
+    //make back Navi on tool bar works and direction
     public void setBackWork(Toolbar tb){
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
     }
