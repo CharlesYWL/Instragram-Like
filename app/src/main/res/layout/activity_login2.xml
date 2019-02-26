@@ -14,19 +14,20 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         >
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/inviText"
-            android:visibility="gone"
-            android:text="1"/>
+            android:layout_width="66dp"
+            android:layout_height="46dp"
+            android:text="1"
+            android:visibility="gone" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="25dp"
-            android:src="@drawable/Logo" />
+            android:src="@drawable/sixsixsix" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

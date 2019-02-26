@@ -31,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.google.android.gms.common.internal.Objects.equal;
+
 
 public class SearchResult extends AppCompatActivity {
 
@@ -187,7 +189,7 @@ public class SearchResult extends AppCompatActivity {
                     boolean flag = false;
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
                         Toast.makeText(getApplicationContext(),"check "+ds.getValue(),Toast.LENGTH_SHORT).show();
-                        if(ds.getValue()==uid)
+                        if(equal(ds.getValue().toString(),uid))
                             flag = true;
                     }
                     if(flag) {
