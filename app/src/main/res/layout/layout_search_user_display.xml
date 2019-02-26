@@ -8,8 +8,8 @@
         android:id="@+id/Photo"
         android:layout_width="136dp"
         android:layout_height="100dp"
-        app:srcCompat="@drawable/sixsixsix"
-        android:layout_marginStart="5dp"/>
+        android:layout_marginStart="5dp"
+        app:srcCompat="@android:drawable/ic_menu_report_image" />
 
     <TextView
         android:id="@+id/Name"

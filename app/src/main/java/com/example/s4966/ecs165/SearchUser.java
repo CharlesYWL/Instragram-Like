@@ -78,9 +78,14 @@ public class SearchUser extends AppCompatActivity {
 
     public boolean isUserExist(final String name){
 
-        final boolean rs;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-        Query query = mDatabaseRef.child("users").orderByChild("username").equalTo(name);
+        String nodes;
+        if(!name.contains("@"))
+            nodes ="username";
+        else
+            nodes = "email";
+
+            Query query = mDatabaseRef.child("users").orderByChild(nodes).equalTo(name);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -97,8 +102,6 @@ public class SearchUser extends AppCompatActivity {
         };
 
         query.addListenerForSingleValueEvent(eventListener);
-
-
         return false;
     }
 
@@ -110,8 +113,15 @@ public class SearchUser extends AppCompatActivity {
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+    //change back behavior
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(getBaseContext(),MainActivity.class));
     }
 }

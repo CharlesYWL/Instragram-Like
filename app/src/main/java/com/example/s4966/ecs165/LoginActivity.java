@@ -522,7 +522,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if(checkIfUserExits(user.getUid())==false) {
                                 Drawable userPic = downloadPhotoToFirebase(user, storageReference);
                                 User newUser = new User(user.getUid(), user.getDisplayName(), "", user.getEmail()
-                                        , User.GENDER.UNKNOW, userPic);
+                                        , User.GENDER.UNKNOWN, userPic);
                                 User.updataUser(userRef, storageReference, newUser);
                             }
                             //otherwise no need to add user

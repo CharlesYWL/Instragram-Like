@@ -79,7 +79,7 @@ public class Profile extends AppCompatActivity {
                 String username = (String) dataSnapshot.child("username").getValue();
                 String bio = (String) dataSnapshot.child("bio").getValue();
                 String email = (String) dataSnapshot.child("email").getValue();
-                User.GENDER gender = User.GENDER.UNKNOW;
+                User.GENDER gender = User.GENDER.UNKNOWN;
                 switch (dataSnapshot.child("gender").getValue().toString()){
                     case "MALE":
                         gender = User.GENDER.MALE;
@@ -87,8 +87,8 @@ public class Profile extends AppCompatActivity {
                     case "FEMALE":
                         gender = User.GENDER.FEMALE;
                         break;
-                    case "UNKNOW":
-                        gender = User.GENDER.UNKNOW;
+                    case "UNKNOWN":
+                        gender = User.GENDER.UNKNOWN;
                         break;
                 }
                 final User us = new User(user.getUid(),username, bio, email, gender, null);
@@ -172,8 +172,8 @@ public class Profile extends AppCompatActivity {
             case FEMALE:
                 g = "FEMALE";
                 break;
-            case UNKNOW:
-                g = "UNKNOW";
+            case UNKNOWN:
+                g = "UNKNOWN";
                 break;
         }
         genderTextView.setText(g);
@@ -183,6 +183,7 @@ public class Profile extends AppCompatActivity {
 
     }
 
+    //change back behavior
     @Override
     public void onBackPressed(){
         startActivity(new Intent(Profile.this,MainActivity.class));

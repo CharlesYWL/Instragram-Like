@@ -101,8 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        test();
+        //test();
+        if(currentUser != null)
+            User.updataUid();
     }
 
     public void test(){
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         StorageReference storagePicNode = FirebaseStorage.getInstance().getReference().child("pic");
         Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        User.getUserFromFireBase(userNode,currentUser.getUid());
 
   //      weili.getUserFromFireBase(userNode,storagePicNode,currentUser.getUid());
   //      Toast.makeText(MainActivity.this,weili.getUsername().toString(),Toast.LENGTH_LONG).show();
@@ -163,5 +165,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //nullify back behavior
+    @Override
+    public void onBackPressed(){
+    }
 }

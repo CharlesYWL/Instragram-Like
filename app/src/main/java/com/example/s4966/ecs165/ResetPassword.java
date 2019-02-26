@@ -59,6 +59,8 @@ public class ResetPassword extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Log.d(TAG, "Email sent.");
                                     Toast.makeText(ResetPassword.this,"Email sent",Toast.LENGTH_SHORT).show();
+
+                                    //delay for a second
                                     new Handler().postDelayed(new Runnable() {//delay function
                                         @Override
                                         public void run() {
