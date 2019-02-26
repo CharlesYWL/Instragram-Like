@@ -26,7 +26,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="25dp"
-            android:src="@drawable/sixsixsix" />
+            android:src="@drawable/Logo" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
