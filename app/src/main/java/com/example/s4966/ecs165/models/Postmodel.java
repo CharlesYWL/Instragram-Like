@@ -6,17 +6,17 @@ public class Postmodel {
     private String text;
     private String date_created;
     private String image_path;
-    private String photo_id;
+    private String post_id;
     private String user_id;
     private String tags;
     private List<LikeModel> likes;
     private List<CommentModel> comments;
 
-    public Postmodel(String text, String date_created, String image_path, String photo_id, String user_id, String tags, List<LikeModel> likes, List<CommentModel> comments) {
+    public Postmodel(String text, String date_created, String image_path, String post_id, String user_id, String tags, List<LikeModel> likes, List<CommentModel> comments) {
         this.text = text;
         this.date_created = date_created;
         this.image_path = image_path;
-        this.photo_id = photo_id;
+        this.post_id = post_id;
         this.user_id = user_id;
         this.tags = tags;
         this.likes = likes;
@@ -51,12 +51,12 @@ public class Postmodel {
         this.image_path = image_path;
     }
 
-    public String getPhoto_id() {
-        return photo_id;
+    public String getPost_id() {
+        return post_id;
     }
 
-    public void setPhoto_id(String photo_id) {
-        this.photo_id = photo_id;
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
     }
 
     public String getUser_id() {

@@ -113,7 +113,7 @@ public class FirebaseUtil {
         post.setImage_path(url);
         //post.setTags(tags);
         post.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        post.setPhoto_id(newPostKey);
+        post.setPost_id(newPostKey);
 
         //insert into database
         //databaseRef.child(mContext.getString(R.string.dbname_user_photos))
