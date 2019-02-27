@@ -47,14 +47,15 @@
                 android:layout_marginRight="20dp"
                 android:id="@+id/post_option_image"/>
         </RelativeLayout>
+
         <com.example.s4966.ecs165.SquareImageView
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/sixsixsix"
-            android:id="@+id/post_image"
-            android:scaleType="centerCrop"
             android:layout_below="@id/post_bar"
-            />
+            android:scaleType="centerCrop"
+            android:src="@drawable/sixsixsix" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -76,6 +77,13 @@
 
 
         </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/commandRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/post_image"
+            android:layout_marginTop="50dp"/>
 
     </RelativeLayout>
 

@@ -7,16 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.*;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.view.Menu;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.example.s4966.ecs165.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -104,9 +102,6 @@ public class MainActivity extends AppCompatActivity {
         //test();
         if(currentUser != null)
             User.updataUid();
-
-
-
 
     }
 

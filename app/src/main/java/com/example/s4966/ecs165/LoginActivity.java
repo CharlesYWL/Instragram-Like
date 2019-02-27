@@ -41,6 +41,7 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
+import com.example.s4966.ecs165.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

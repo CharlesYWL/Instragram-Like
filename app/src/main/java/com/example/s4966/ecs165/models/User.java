@@ -1,4 +1,4 @@
-package com.example.s4966.ecs165;
+package com.example.s4966.ecs165.models;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -21,10 +20,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class User {
     public enum GENDER {MALE, FEMALE,UNKNOWN}

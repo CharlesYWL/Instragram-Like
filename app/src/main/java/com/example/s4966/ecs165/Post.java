@@ -28,7 +28,7 @@ public class Post extends AppCompatActivity {
 
     //extar function
     public void setBackWork(Toolbar tb){
-        getSupportActionBar().setTitle("Post");
+        getSupportActionBar().setTitle("Postmodel");
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

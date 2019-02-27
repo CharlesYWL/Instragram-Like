@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.s4966.ecs165.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,8 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static com.example.s4966.ecs165.User.GENDER.FEMALE;
-import static com.example.s4966.ecs165.User.GENDER.MALE;
+import static com.example.s4966.ecs165.models.User.GENDER.FEMALE;
+import static com.example.s4966.ecs165.models.User.GENDER.MALE;
 
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;

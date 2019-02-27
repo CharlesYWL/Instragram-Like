@@ -2,7 +2,7 @@ package com.example.s4966.ecs165.utils;
 
 import com.example.s4966.ecs165.R;
 import com.example.s4966.ecs165.SquareImageView;
-import com.example.s4966.ecs165.models.Post;
+import com.example.s4966.ecs165.models.Postmodel;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +15,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FeedListAdapter extends ArrayAdapter<Post> {
+public class FeedListAdapter extends ArrayAdapter<Postmodel> {
     private static final String TAG = "FeedListAdapter";
 
     private int layoutResourcesNum;
@@ -30,8 +28,8 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
     private LayoutInflater myInflater;
     private String curretUserName = "";
 
-    public FeedListAdapter(@NotNull Context context, int resource, @NotNull List<Post> posts){
-        super(context, resource, posts);
+    public FeedListAdapter(@NotNull Context context, int resource, @NotNull List<Postmodel> postmodels){
+        super(context, resource, postmodels);
         myInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutResourcesNum = resource;
         myContext = context;
@@ -44,7 +42,7 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
         SquareImageView postImageView;
         ImageView likeImageView;
 
-        Post post;
+        Postmodel postmodel;
     }
 
 
@@ -65,7 +63,7 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
             viewCollection = (PostViewCollection) convertView.getTag();
         }
 
-        viewCollection.post = getItem(position);
+        viewCollection.postmodel = getItem(position);
 
         // set all things ready
 
