@@ -24,7 +24,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/word_hold"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:ems="10"
@@ -37,11 +37,16 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:id="@+id/picture_hold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
                     android:layout_weight="0"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
+                    app:srcCompat="@android:drawable/ic_menu_camera"
+                    android:scaleType="centerInside"
+                    android:background="@color/white"
+                    android:adjustViewBounds="true"
+                    android:onClick="changePic"
+                    android:clickable="true"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -64,7 +69,7 @@
                 android:textSize="24dp"/>
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/location_hold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CA"
@@ -92,7 +97,7 @@
                 android:textSize="24dp"/>
 
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/privacy_hold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -104,7 +109,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/totallayout"
