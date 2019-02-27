@@ -42,12 +42,6 @@
                     android:layout_height="70dp"
                     android:layout_weight="0"
                     app:srcCompat="@android:drawable/ic_menu_camera" />
-                <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="0"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
             </LinearLayout>
 
         </LinearLayout>

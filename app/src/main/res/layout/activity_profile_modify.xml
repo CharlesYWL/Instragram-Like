@@ -40,7 +40,7 @@
 
                 <TextView
                     android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
@@ -51,11 +51,13 @@
 
                 <ImageView
                     android:id="@+id/pic_imageview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_weight="0.01"
                     android:clickable="true"
+                    android:scaleType="centerInside"
+                    android:layout_gravity="center"
                     android:onClick="changePic"
                     android:src="@drawable/sixsixsix" />
             </LinearLayout>
