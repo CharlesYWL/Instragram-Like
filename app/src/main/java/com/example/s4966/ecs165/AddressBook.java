@@ -44,7 +44,7 @@ import static com.google.android.gms.common.internal.Objects.equal;
 
 
 public class AddressBook extends Fragment {
-
+    private static final String TAG = "AddressBook";
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
@@ -108,6 +108,7 @@ public class AddressBook extends Fragment {
                 holder.setName(model);
                 holder.setPhoto(model);
                 //on Click listener
+
             }
         };
 

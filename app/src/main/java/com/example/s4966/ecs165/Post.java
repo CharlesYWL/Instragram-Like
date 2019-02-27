@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.renderscript.Sampler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.ValueEventListener;
 
 public class Post extends AppCompatActivity {
 
@@ -38,6 +41,7 @@ public class Post extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         init();
+        postListener();
 
 
     }
@@ -51,6 +55,20 @@ public class Post extends AppCompatActivity {
         post = findViewById(R.id.floatingActionButton);
 
     }
+
+    public void postListener(){
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageButton.getDrawable();
+                String words = word.getText().toString();
+                //TODO: link to Postmodel.class funtion to push to firebase
+                Toast.makeText(Post.this, words, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
 
     //when Click on Picture
     public void changePic(View v){

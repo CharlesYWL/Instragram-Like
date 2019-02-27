@@ -6,9 +6,9 @@
     android:clickable="true"
     android:background="@drawable/white_retangle_button">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/Photo"
-        android:layout_width="136dp"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="5dp"
         app:srcCompat="@android:drawable/ic_menu_report_image" />

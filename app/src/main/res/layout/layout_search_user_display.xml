@@ -4,9 +4,9 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/Photo"
-        android:layout_width="136dp"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="5dp"
         app:srcCompat="@android:drawable/ic_menu_report_image" />
@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="@color/white"
+        android:background="@color/browser_actions_bg_grey"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/green_add"
         android:layout_marginEnd="5dp"/>
