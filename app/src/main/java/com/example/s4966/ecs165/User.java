@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -19,12 +20,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 public class User {
-    public enum GENDER {MALE, FEMALE,UNKNOW}
+    public enum GENDER {MALE, FEMALE,UNKNOWN}
 
     private String uid ;
     private String username;
@@ -97,6 +100,8 @@ public class User {
         uid = id;
     }
 
+    public void setUsername(String name){username = name;}
+
     public String getUid(){
         return uid;
     }
@@ -112,18 +117,19 @@ public class User {
     public String getPictureId(){return pictureId;}
 
 
-    public static void addFollow(DatabaseReference databaseFollowsNode, User follow, User followed){
+    public static void addFollow(DatabaseReference databaseFollowsNode, User follow_target){
         String TAG = "void addFollow(User follow, User followed)";
-        if (!follow.hasUID() || !followed.hasUID()){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if ( !follow_target.hasUID()){
             Log.e(TAG, "follow or followed user has no uid,");
             System.exit(1);
         }
-        Map<String, Object> result = new HashMap<>();
+
+        //Map<String, Object> result = new HashMap<>();
         // should be foreign key
-        result.put("follow", follow.getUid());
-        result.put("follow username", follow.getUsername());
-        result.put("followed", followed.getUsername());
-        databaseFollowsNode.push().setValue(result);
+        //result.put("follower", currentUser.getUid());
+        //result.put("follow_target", follow_target.getUid());
+        databaseFollowsNode.child(currentUser.getUid()).push().setValue(follow_target.getUid());
     }
 
     // TODO: later we need to delete related picture in database as well
@@ -149,13 +155,12 @@ public class User {
 
     //cannot run for some reasons
     //TODO fix it
-    public static void getUserFromFireBase(final DatabaseReference databaseUserNode, final StorageReference storagePicNode, String Uid, User u){
+    public static void getUserFromFireBase(DatabaseReference databaseUserNode, String Uid){
 
         databaseUserNode.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User us = dataSnapshot.getValue(User.class);
-
             }
 
             @Override
@@ -164,7 +169,6 @@ public class User {
         });
 
     }
-
 
 
     private void toFireBase(DatabaseReference databaseUserNode, StorageReference storageImageNode){
@@ -268,7 +272,13 @@ public class User {
 
     }
 
+    //used for init uid for profile
+    public static void updataUid(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        mDatabase.child("users").child(currentUser.getUid()).child("uid").setValue(currentUser.getUid());
+    }
 
 
 }

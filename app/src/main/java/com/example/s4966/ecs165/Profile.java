@@ -3,21 +3,15 @@ package com.example.s4966.ecs165;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.*;
 
 import java.util.concurrent.Semaphore;
 
@@ -72,16 +65,21 @@ public class Profile extends AppCompatActivity {
          bioTextView= findViewById(R.id.bio_textView);
          imageView = findViewById(R.id.pic_imageview);
 
+         if(user == null) { // for some rare case
+             Intent intent = new Intent().setClass(Profile.this,LoginActivity.class);
+             startActivity(intent);
+         }
          //it only opearte once per load
          // test
-         //mDatabase.child("users").child("lol3sS2S0TNy9vq4s90OBT0fxkC2").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        //[command start]
          mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String username = (String) dataSnapshot.child("username").getValue();
                 String bio = (String) dataSnapshot.child("bio").getValue();
                 String email = (String) dataSnapshot.child("email").getValue();
-                User.GENDER gender = User.GENDER.UNKNOW;
+                User.GENDER gender = User.GENDER.UNKNOWN;
                 switch (dataSnapshot.child("gender").getValue().toString()){
                     case "MALE":
                         gender = User.GENDER.MALE;
@@ -89,8 +87,8 @@ public class Profile extends AppCompatActivity {
                     case "FEMALE":
                         gender = User.GENDER.FEMALE;
                         break;
-                    case "UNKNOW":
-                        gender = User.GENDER.UNKNOW;
+                    case "UNKNOWN":
+                        gender = User.GENDER.UNKNOWN;
                         break;
                 }
                 final User us = new User(user.getUid(),username, bio, email, gender, null);
@@ -118,6 +116,7 @@ public class Profile extends AppCompatActivity {
 
             }
         });
+        //[command end]
 
         //this one listen to toolbar click
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -143,12 +142,13 @@ public class Profile extends AppCompatActivity {
     }
 
 
-    //make back Navi on tool bar works
+    //make back Navi on tool bar works and direction
     public void setBackWork(Toolbar tb){
+        getSupportActionBar().setTitle("Profile");
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
     }
@@ -172,8 +172,8 @@ public class Profile extends AppCompatActivity {
             case FEMALE:
                 g = "FEMALE";
                 break;
-            case UNKNOW:
-                g = "UNKNOW";
+            case UNKNOWN:
+                g = "UNKNOWN";
                 break;
         }
         genderTextView.setText(g);
@@ -183,6 +183,11 @@ public class Profile extends AppCompatActivity {
 
     }
 
+    //change back behavior
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Profile.this,MainActivity.class));
+    }
 
 }
 

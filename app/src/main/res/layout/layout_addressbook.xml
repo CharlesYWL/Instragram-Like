@@ -39,24 +39,10 @@
             ads:srcCompat="@drawable/plus" />
     </LinearLayout>
 
-    <view class="android.support.v7.app.AlertController$RecycleListView"
+    <android.support.v7.widget.RecyclerView
     android:id="@+id/addressRecycleView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/textView6"
-    android:layout_below="@id/layout">
-
-
-
-</view>
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-
-        android:text="end of xml" />
+    android:layout_below="@id/layout"/>
 
 </RelativeLayout>

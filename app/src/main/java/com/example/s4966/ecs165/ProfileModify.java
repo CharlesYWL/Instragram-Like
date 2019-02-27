@@ -2,7 +2,6 @@ package com.example.s4966.ecs165;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -15,7 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.s4966.ecs165.User.GENDER.FEMALE;
 import static com.example.s4966.ecs165.User.GENDER.MALE;
-import com.example.s4966.ecs165.User;
+
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -113,8 +111,9 @@ public class ProfileModify extends AppCompatActivity {
     }
 
 
-    //make back Navi on tool bar works
+    //make back Navi on tool bar works and othersetting about tool bars
     public void setBackWork(Toolbar tb){
+        getSupportActionBar().setTitle("Account setting");
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +136,7 @@ public class ProfileModify extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //updata info.
     public void updataUI(User user){
         newName.setText(user.getUsername());
         bio.setText(user.getBio());
