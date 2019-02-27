@@ -23,6 +23,10 @@ public class Postmodel {
         this.comments = comments;
     }
 
+    public Postmodel(){
+
+    }
+
     public String getText() {
         return text;
     }
