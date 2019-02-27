@@ -57,6 +57,13 @@ dependencies {
     implementation 'com.google.android.gms:play-services-appinvite:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
 */
+    // Circle ImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    // Elastic List
+    implementation 'com.github.eschao:android-ElasticListView:v1.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'
