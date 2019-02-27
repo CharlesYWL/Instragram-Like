@@ -104,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         //test();
         if(currentUser != null)
             User.updataUid();
+
+
+
+
     }
 
     public void test(){
@@ -113,29 +117,7 @@ public class MainActivity extends AppCompatActivity {
         StorageReference storagePicNode = FirebaseStorage.getInstance().getReference().child("pic");
         Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        User.getUserFromFireBase(userNode,currentUser.getUid());
-
-  //      weili.getUserFromFireBase(userNode,storagePicNode,currentUser.getUid());
-  //      Toast.makeText(MainActivity.this,weili.getUsername().toString(),Toast.LENGTH_LONG).show();
-
- //       User weili = new User(currentUser.getUid(), "weilAi yin"," shit", "xlyin@ucdavis.edu", User.GENDER.MALE, image);
- //      User.updataUser(userNode,storagePicNode,weili);
-        //User.addUser(userNode, storagePicNode, weili);
-        /*User yuanbo = new User("yuanbo","bad student in UC Davis", "234@ucdavis.edu", User.GENDER.MALE);
-        User weili = new User("weili", "ABC", "abc@ucdavis.edu", User.GENDER.FEMALE);
-        User toby = new User("Toby", "who never attend meetings", "toby@ucdavis.edu", User.GENDER.MALE);
-        User.addUser(userNode, linsheng);
-        User.addUser(userNode, yuanbo);
-        User.addUser(userNode, weili);
-        User.addUser(userNode, toby);
-        User.addFollow(followsNode, yuanbo, linsheng);
-        User.addFollow(followsNode, weili, linsheng);
-        User.addFollow(followsNode, toby, linsheng);
-        User.addFollow(followsNode, toby, yuanbo);
-        User.addFollow(followsNode, toby, weili);
-        */
-        //userNode.removeValue();
-        //followsNode.removeValue();
+        //User.getUserFromFireBase(userNode,currentUser.getUid());
     }
 
     private void initFragment()
@@ -169,4 +151,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
     }
+
+
 }

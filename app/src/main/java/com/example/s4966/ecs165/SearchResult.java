@@ -1,6 +1,8 @@
 package com.example.s4966.ecs165;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,11 +18,13 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -30,6 +34,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.concurrent.Semaphore;
 
 import static com.google.android.gms.common.internal.Objects.equal;
 
@@ -42,7 +50,7 @@ public class SearchResult extends AppCompatActivity {
     private FirebaseRecyclerAdapter adapter;
     private String target;
     private DatabaseReference userRef;
-    private FirebaseRecyclerAdapter<User,SearchResult.UserViewHolder> mUserAdapter;
+    private StorageReference storageReference;
     //need to use for every class
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
@@ -76,6 +84,7 @@ public class SearchResult extends AppCompatActivity {
 
         userRef = FirebaseDatabase.getInstance().getReference().child("users");
         userRef.keepSynced(true);
+        storageReference = FirebaseStorage.getInstance().getReference();
         //DatabaseReference userRef2 = FirebaseDatabase.getInstance().getReference().child("users");
         userList=findViewById(R.id.recyclerView);
 
@@ -99,7 +108,7 @@ public class SearchResult extends AppCompatActivity {
             @Override
             public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 // Create a new instance of the ViewHolder, in this case we are using a custom
-                // layout called R.layout.message for each item
+                // layout called R.layout_search_user_display for each item
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.layout_search_user_display, parent, false);
 
@@ -110,14 +119,12 @@ public class SearchResult extends AppCompatActivity {
             protected void onBindViewHolder(final UserViewHolder holder, int position, final User model) {
                 holder.setName(model.getUsername());
                 holder.setPhoto(model.getPictureId());
-                //TODO: both setPhoto and setButton
                 holder.setButton_check(model.getUid());
 
                 holder.imb.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
                         //TODO: follow action, add in follow Node.
-                        //ToDO: need sync followed or not options
                         Toast.makeText(SearchResult.this,"Added",Toast.LENGTH_SHORT).show();
                         holder.setButton(true);
 
@@ -160,14 +167,32 @@ public class SearchResult extends AppCompatActivity {
             mView = itemView;
             imb = mView.findViewById(R.id.imageButton);
         }
-        public void setPhoto(String photoID){
 
-            //Drawable photo = mView.findViewById(R.id.Photo);
+        public void setPhoto(String photoID){
+            final ImageView photo = mView.findViewById(R.id.Photo);
+            if (photoID==null)
+                return;
+
+            final Semaphore semaphore = new Semaphore(1);
+            // TODO there is a hard image size limit, may fix it in future.
+            final long TEN_MEGABYTE = 10 * 1024 * 1024;
+            StorageReference storagePicNode = storageReference.child("pic");
+            storagePicNode.child(photoID).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    photo.setImageBitmap(bmp);
+                }
+            });
         }
+
+
         public void setName(String name){
             TextView uname = mView.findViewById(R.id.Name);
             uname.setText(name);
         }
+
+
         public void setButton(boolean flag){
             Drawable grayD = getResources().getDrawable(R.drawable.gray_added);
             Drawable greenD = getResources().getDrawable(R.drawable.green_add);
@@ -208,6 +233,7 @@ public class SearchResult extends AppCompatActivity {
                 }
 
             });
+            //not sure if it helps on onDataChange()
             query.child("test").setValue("123");
             query.child("test").setValue(null);
         }

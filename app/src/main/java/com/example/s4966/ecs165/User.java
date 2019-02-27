@@ -272,13 +272,13 @@ public class User {
 
     }
 
+    //used for init uid for profile
     public static void updataUid(){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mDatabase.child("users").child(currentUser.getUid()).child("uid").setValue(currentUser.getUid());
     }
-
 
 
 }
