@@ -3,6 +3,7 @@ package com.example.s4966.ecs165;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.renderscript.Sampler;
@@ -18,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.s4966.ecs165.utils.FirebaseUtil;
 import com.google.firebase.database.ValueEventListener;
 
 public class Post extends AppCompatActivity {
@@ -60,10 +62,12 @@ public class Post extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageButton.getDrawable();
+                Drawable d = imageButton.getDrawable();
                 String words = word.getText().toString();
                 //TODO: link to Postmodel.class funtion to push to firebase
                 Toast.makeText(Post.this, words, Toast.LENGTH_SHORT).show();
+                FirebaseUtil uti = new FirebaseUtil(getApplicationContext());
+                uti.uploadNewPost(words,d);
 
             }
         });
