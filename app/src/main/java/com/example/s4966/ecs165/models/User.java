@@ -1,6 +1,7 @@
 package com.example.s4966.ecs165.models;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -15,12 +16,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.*;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class User {
     public enum GENDER {MALE, FEMALE,UNKNOWN}
@@ -32,9 +35,7 @@ public class User {
     private GENDER gender;
     private Drawable picture;
     private String TAG = "User class";
-    /**
-     *  pictureId should always be the same with uid, if exists a picture;
-     */
+    //pictureId should always be the same with uid, if exists a picture;
     private String pictureId;
 
     /**
@@ -45,15 +46,6 @@ public class User {
      * @param gen gender
      * @param pic: If there is no picture for the user, please pass null
      */
-   /* public User(String usernameStr, String bioStr, String emailStr, GENDER gen, Drawable pic){
-        uid = "";
-        username = usernameStr;
-        bio = bioStr;
-        email = emailStr;
-        gender = gen;
-        picture = pic;
-        pictureId = null;
-    }*/
 
     /**
      *
@@ -75,28 +67,30 @@ public class User {
     }
     public User(){}
 
-    public String getUsername(){
-        return username;
-    }
-
-    public boolean hasUID(){
-        return uid != "";
-    }
-
-    public void setPicture(String picId, Drawable pic){
-        pictureId = picId;
-        picture=pic;
-    }
-
-    public Drawable getPicture(){
-        return picture;
-    }
-
     public void setUid(String id){
         uid = id;
     }
 
     public void setUsername(String name){username = name;}
+
+    public void setBio(String tbio){bio = tbio;}
+    public void setEmail(String mail){email = mail;}
+    public void setGender(User.GENDER g){gender = g;}
+    public void setPicture(Drawable pic){ picture=pic; }
+    public void setPictureId (String pic){pictureId=pic;}
+
+    public String getUsername(){
+        return username;
+    }
+
+
+    public boolean hasUID(){
+        return uid != "";
+    }
+
+    public Drawable getPicture(){
+        return picture;
+    }
 
     public String getUid(){
         return uid;
@@ -151,12 +145,35 @@ public class User {
 
     //cannot run for some reasons
     //TODO fix it
-    public static void getUserFromFireBase(DatabaseReference databaseUserNode, String Uid){
-
+    public static void getUserFromFireBase(String Uid,final User target){
+        final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        DatabaseReference databaseUserNode = FirebaseDatabase.getInstance().getReference();
         databaseUserNode.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User us = dataSnapshot.getValue(User.class);
+                target.setUsername(us.getUsername());
+                target.setBio(us.getBio());
+                target.setEmail(us.getEmail());
+                target.setGender(us.getGender());
+                target.setPictureId(us.getPictureId());
+                target.setUid(us.getUid());
+
+                if (dataSnapshot.child("pictureId").exists()) {
+                    final Semaphore semaphore = new Semaphore(1);
+                    final String pictureId = (String) dataSnapshot.child("pictureId").getValue();
+                    // TODO there is a hard image size limit, may fix it in future.
+                    final long TEN_MEGABYTE = 10 * 1024 * 1024;
+                    StorageReference storagePicNode = storageReference.child("pic");
+                    storagePicNode.child(pictureId).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            target.setPicture(new BitmapDrawable(bmp));
+                        }
+                    });
+                }
+
             }
 
             @Override

@@ -70,11 +70,10 @@ public class Profile extends AppCompatActivity {
              Intent intent = new Intent().setClass(Profile.this,LoginActivity.class);
              startActivity(intent);
          }
-         //it only opearte once per load
-         // test
+
 
         //[command start]
-         mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+         mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String username = (String) dataSnapshot.child("username").getValue();
@@ -138,9 +137,8 @@ public class Profile extends AppCompatActivity {
         });
         //make sure it has user
 
-
-
     }
+
 
 
     //make back Navi on tool bar works and direction
@@ -162,6 +160,8 @@ public class Profile extends AppCompatActivity {
     }
 
     public void updataUI(User user){
+        //User user = new User();
+        //User.getUserFromFireBase(user.getUid(),user);
         nameTextView.setText(user.getUsername());
         bioTextView.setText(user.getBio());
         uidTextView.setText(user.getUid());
@@ -190,5 +190,11 @@ public class Profile extends AppCompatActivity {
         startActivity(new Intent(Profile.this,MainActivity.class));
     }
 
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+
+    }
 }
 
