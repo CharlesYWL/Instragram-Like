@@ -40,6 +40,53 @@ public class FirebaseUtil {
     private String userID;
     private double photoUploadProgress = 0;
 
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public FirebaseAuth getAuth() {
+        return auth;
+    }
+
+    public void setAuth(FirebaseAuth auth) {
+        this.auth = auth;
+    }
+
+    public FirebaseDatabase getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(FirebaseDatabase database) {
+        this.database = database;
+    }
+
+    public DatabaseReference getDatabaseRef() {
+        return databaseRef;
+    }
+
+    public void setDatabaseRef(DatabaseReference databaseRef) {
+        this.databaseRef = databaseRef;
+    }
+
+    public StorageReference getStorageRef() {
+        return storageRef;
+    }
+
+    public void setStorageRef(StorageReference storageRef) {
+        this.storageRef = storageRef;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     //vars
     //private Context mContext;
@@ -116,10 +163,11 @@ public class FirebaseUtil {
         post.setPost_id(newPostKey);
 
         //insert into database
-        //databaseRef.child(mContext.getString(R.string.dbname_user_photos))
-        //        .child(FirebaseAuth.getInstance().getCurrentUser()
-        //                .getUid()).child(newPostKey).setValue(post);
-        databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH).child(newPostKey).setValue(post);
+        databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
+                .child(post.getUser_id())
+                .child(newPostKey)
+                .setValue(post);
+        //databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH).child(newPostKey).setValue(post);
     }
 
     // timestamp used as post image id
