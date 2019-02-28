@@ -55,12 +55,18 @@
             android:layout_below="@id/post_bar"
             android:scaleType="centerCrop"
             android:src="@drawable/sixsixsix" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id = "@+id/post_text"
+            android:textSize="20sp"
+            android:layout_below = "@id/post_image"
+            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/post_bar2"
-            android:layout_below="@id/post_image">
+            android:layout_below="@id/post_text">
 
             <ImageView
                 android:layout_width="50dp"
@@ -68,7 +74,7 @@
                 android:id="@+id/like_bottom_image"
                 android:src="@drawable/ic_heart_outline"
                 android:layout_marginLeft="10dp"
-                android:clickable="true"/>
+                android:clickable="true" />
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
@@ -79,12 +85,6 @@
 
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/commandRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/post_image"
-            android:layout_marginTop="50dp"/>
 
     </RelativeLayout>
 

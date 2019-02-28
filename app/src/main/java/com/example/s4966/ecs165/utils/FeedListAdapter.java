@@ -39,6 +39,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FeedListAdapter extends ArrayAdapter<Postmodel> {
     private static final String TAG = "FeedListAdapter";
 
+    private static int temp = 0;
+
     private int layoutResourcesNum;
     private Context myContext;
     private DatabaseReference firebaseRef;
@@ -58,6 +60,7 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
     static class PostViewCollection{
         CircleImageView profileImageView;
         TextView usernameTextView;
+        TextView postTextView;
         SquareImageView postImageView;
         ImageView likeImageView;
         Postmodel postmodel;
@@ -75,6 +78,8 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             viewCollection.usernameTextView = convertView.findViewById(R.id.post_username);
             viewCollection.postImageView = convertView.findViewById(R.id.post_image);
             viewCollection.profileImageView = convertView.findViewById(R.id.post_profile_photo);
+            viewCollection.postTextView = convertView.findViewById(R.id.post_text);
+            viewCollection.likeImageView =convertView.findViewById(R.id.like_bottom_image);
 
             convertView.setTag(viewCollection);
         }else{
@@ -84,12 +89,26 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
         viewCollection.postmodel = getItem(position);
         updatePost(viewCollection);
 
+        viewCollection.likeImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "enter onClick", Toast.LENGTH_SHORT).show();
+                // TODO testONly
+                if(temp == 0) {
+                    viewCollection.likeImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_heart_outline_red));
+                }else if(temp == 1){
+                    viewCollection.likeImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_heart_outline));
+                }
+                temp = (temp + 1)%2;
+            }
+        });
 
         return convertView;
     }
 
     public void updatePost(final PostViewCollection viewCollection){
 
+        viewCollection.postTextView.setText(viewCollection.postmodel.getText());
         //read for post owner stuff
         firebaseRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -129,8 +148,6 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSnapshot.child("text").getValue(); //text
-                dataSnapshot.child("image_path").getValue();
 
                 // TODO there is a hard image size limit, may fix it in future.
                 final long TEN_MEGABYTE = 10 * 1024 * 1024;
@@ -151,6 +168,16 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
             }
         });
+
+
+        checkLikeButton();
     }
 
+    /*
+    * It will check if user like the post
+    * TODO:do it after we figure out how to add like into post
+    * */
+    public void checkLikeButton(){
+
+    }
 }

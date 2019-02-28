@@ -241,4 +241,5 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
         // Notify load is done
         mainFeedListView.notifyLoaded();
     }
+
 }
