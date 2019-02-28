@@ -100,7 +100,7 @@
 
 
     // firebase post field name
-    <string name="field_date">dated_created</string>
+    <string name="field_date">date_created</string>
     <string name="field_image_path">image_path</string>
     <string name="field_pid">post_id</string>
     <string name="field_text">text</string>

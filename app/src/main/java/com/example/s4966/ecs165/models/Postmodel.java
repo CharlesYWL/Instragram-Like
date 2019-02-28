@@ -24,8 +24,8 @@ public class Postmodel {
     }
 
     public Postmodel(){
-
     }
+
 
     public String getText() {
         return text;
