@@ -68,7 +68,7 @@ public class Post extends AppCompatActivity {
                 Toast.makeText(Post.this, words, Toast.LENGTH_SHORT).show();
                 FirebaseUtil uti = new FirebaseUtil(getApplicationContext());
                 uti.uploadNewPost(words,d);
-
+                finish();
             }
         });
     }

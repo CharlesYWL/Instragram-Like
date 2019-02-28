@@ -124,14 +124,26 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             }
         });
         //read for post itself
-        firebaseRef.child("posts").child(viewCollection.postmodel.getPost_id()).addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseRef.child("posts").child(viewCollection.postmodel.getUser_id())
+                .child(viewCollection.postmodel.getPost_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 dataSnapshot.child("text").getValue(); //text
                 dataSnapshot.child("image_path").getValue();
-                Glide.with(getContext())
-                        .load(dataSnapshot.child("image_path").getValue())
-                        .into(viewCollection.postImageView);
+
+                // TODO there is a hard image size limit, may fix it in future.
+                final long TEN_MEGABYTE = 10 * 1024 * 1024;
+                StorageReference storagePicNode = storageRef.child("post_pic").child("users");
+                storagePicNode.child(viewCollection.postmodel.getUser_id())
+                        .child(viewCollection.postmodel.getDate_created()).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        viewCollection.postImageView.setImageBitmap(bmp);
+                    }
+                });
+
             }
 
             @Override

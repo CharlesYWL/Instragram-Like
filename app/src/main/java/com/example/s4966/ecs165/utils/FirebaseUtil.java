@@ -107,8 +107,9 @@ public class FirebaseUtil {
     public void uploadNewPost(final String text, Drawable pic){
         Log.d(TAG, "upload new post");
 
+        final String timestamp = getTimestamp();
         StorageReference storageNode = this.storageRef.
-                child(FirebasePaths.FIREBASE_POSTIMAGE_STORAGE_PATH + "/" + this.userID + "/" + getTimestamp());
+                child(FirebasePaths.FIREBASE_POSTIMAGE_STORAGE_PATH + "/" + this.userID + "/" + timestamp);
         Bitmap bm = ((BitmapDrawable) pic).getBitmap();
         byte[] bytes = ImageManager.getBytesFromBitmap(bm, 100);
         UploadTask uploadTask = storageNode.putBytes(bytes);
@@ -121,7 +122,7 @@ public class FirebaseUtil {
                 Toast.makeText(context, "post upload success", Toast.LENGTH_SHORT).show();
 
                 //add the new photo to 'photos' node and 'user_photos' node
-                uploadPostInfoToDatabase(text, firebaseUrl.toString());
+                uploadPostInfoToDatabase(timestamp, text, firebaseUrl.toString());
 
                 //navigate to the main feed so the user can see their photo
                 //Intent intent = new Intent(context, MainActivity.class);
@@ -149,14 +150,14 @@ public class FirebaseUtil {
 
     }
 
-    private void uploadPostInfoToDatabase(String text, String url){
+    private void uploadPostInfoToDatabase(String timestamp, String text, String url){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
 
         //String tags = StringManipulation.getTags(caption);
         String newPostKey = databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH).push().getKey();
         Postmodel post = new Postmodel();
         post.setText(text);
-        post.setDate_created(getTimestamp());
+        post.setDate_created(timestamp);
         post.setImage_path(url);
         //post.setTags(tags);
         post.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
