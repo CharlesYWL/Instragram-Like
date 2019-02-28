@@ -124,8 +124,8 @@ public class FirebaseUtil {
                 uploadPostInfoToDatabase(text, firebaseUrl.toString());
 
                 //navigate to the main feed so the user can see their photo
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
+                //Intent intent = new Intent(context, MainActivity.class);
+                //context.startActivity(intent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

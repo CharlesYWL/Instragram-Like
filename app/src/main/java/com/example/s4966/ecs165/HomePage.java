@@ -44,7 +44,7 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_homepage, container, false);
         followingUsers = new ArrayList<>();
-        firebaseUtil = new FirebaseUtil(getContext());
+        firebaseUtil = new FirebaseUtil(getActivity());
         mainFeedListView = (ElasticListView) view.findViewById(R.id.main_feed_listView);
 
 
