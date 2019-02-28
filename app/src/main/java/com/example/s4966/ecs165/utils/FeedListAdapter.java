@@ -90,6 +90,7 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
     public void updatePost(final PostViewCollection viewCollection){
 
+        //read for post owner stuff
         firebaseRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -122,7 +123,22 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
             }
         });
-    }
+        //read for post itself
+        firebaseRef.child("posts").child(viewCollection.postmodel.getPost_id()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dataSnapshot.child("text").getValue(); //text
+                dataSnapshot.child("image_path").getValue();
+                Glide.with(getContext())
+                        .load(dataSnapshot.child("image_path").getValue())
+                        .into(viewCollection.postImageView);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }
