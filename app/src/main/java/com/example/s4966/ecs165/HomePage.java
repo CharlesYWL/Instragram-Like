@@ -1,5 +1,6 @@
 package com.example.s4966.ecs165;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.example.s4966.ecs165.models.Postmodel;
 import com.example.s4966.ecs165.utils.FeedListAdapter;
 import com.example.s4966.ecs165.utils.FirebasePaths;
 import com.example.s4966.ecs165.utils.FirebaseUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -67,6 +70,10 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
     }
 
     private void displayPosts(){
+        FirebaseUser currentUser= FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser==null){
+            startActivity(new Intent(getContext(),LoginActivity.class));
+        }
         getFollowingUsersPosts();
 
     }

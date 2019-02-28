@@ -153,9 +153,10 @@ public class Profile extends AppCompatActivity {
     }
 
     public void logout(View v){
+
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent();
-        intent.setClass(Profile.this,MainActivity.class);
+        intent.setClass(Profile.this,LoginActivity.class);
         startActivity(intent);
     }
 
