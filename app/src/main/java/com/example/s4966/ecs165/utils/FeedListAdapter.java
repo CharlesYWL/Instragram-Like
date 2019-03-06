@@ -2,9 +2,12 @@ package com.example.s4966.ecs165.utils;
 
 import com.bumptech.glide.Glide;
 import com.example.s4966.ecs165.AddressBook;
+import com.example.s4966.ecs165.MainActivity;
 import com.example.s4966.ecs165.R;
 import com.example.s4966.ecs165.SquareImageView;
 import com.example.s4966.ecs165.models.Postmodel;
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +66,9 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
         TextView usernameTextView;
         TextView postTextView;
         SquareImageView postImageView;
+        RelativeLayout likeImageContainer;
         ImageView likeImageView;
+        ImageView likeImageViewLiked;
         Postmodel postmodel;
     }
 
@@ -79,7 +85,9 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             viewCollection.postImageView = convertView.findViewById(R.id.post_image);
             viewCollection.profileImageView = convertView.findViewById(R.id.post_profile_photo);
             viewCollection.postTextView = convertView.findViewById(R.id.post_text);
+            viewCollection.likeImageContainer = convertView.findViewById(R.id.like_bottom_container);
             viewCollection.likeImageView =convertView.findViewById(R.id.like_bottom_image);
+            viewCollection.likeImageViewLiked = convertView.findViewById(R.id.like_bottom_image_likedStatus);
 
             convertView.setTag(viewCollection);
         }else{
@@ -88,22 +96,50 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
         viewCollection.postmodel = getItem(position);
         updatePost(viewCollection);
-
+        viewCollection.likeImageViewLiked.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                updatePostLike(viewCollection);
+            }
+        });
         viewCollection.likeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "enter onClick", Toast.LENGTH_SHORT).show();
-                // TODO testONly
+                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updatePostLike(viewCollection);
+                    }
+                });
+                /*
                 if(temp == 0) {
                     viewCollection.likeImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_heart_outline_red));
                 }else if(temp == 1){
                     viewCollection.likeImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_heart_outline));
                 }
                 temp = (temp + 1)%2;
+                */
             }
         });
 
         return convertView;
+    }
+
+    private void updatePostLike(PostViewCollection viewCollection){
+
+
+        Toast.makeText(getContext(), "enter onClick Like button", Toast.LENGTH_SHORT).show();
+
+        // TODO testONly
+        if(viewCollection.likeImageView.getVisibility() == View.VISIBLE){
+            Toast.makeText(getContext(), "is visible", Toast.LENGTH_SHORT).show();
+            viewCollection.likeImageViewLiked.setVisibility(View.VISIBLE);
+            viewCollection.likeImageView.setVisibility(View.INVISIBLE);
+        }else{
+            Toast.makeText(getContext(), "not visible", Toast.LENGTH_SHORT).show();
+            viewCollection.likeImageViewLiked.setVisibility(View.INVISIBLE);
+            viewCollection.likeImageView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void updatePost(final PostViewCollection viewCollection){
@@ -117,7 +153,13 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                     if(ds.child("uid").getValue().toString().equals(viewCollection.postmodel.getUser_id())){
                         //here we found the right users
                         Toast.makeText(getContext(), "post Updated", Toast.LENGTH_SHORT).show();
-                        viewCollection.usernameTextView.setText(ds.child("username").getValue().toString());
+                        final String text = ds.child("username").getValue().toString();
+                        ((Activity)getContext()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                viewCollection.usernameTextView.setText(text);
+                            }
+                        });
 
                         //profile setting
                         if (ds.child("pictureId").exists()) {
@@ -128,8 +170,13 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                             storagePicNode.child(pictureId).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                 @Override
                                 public void onSuccess(byte[] bytes) {
-                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    viewCollection.profileImageView.setImageBitmap(bmp);
+                                    final Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    ((Activity)getContext()).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            viewCollection.profileImageView.setImageBitmap(bmp);
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -143,9 +190,10 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             }
         });
         //read for post itself
-        firebaseRef.child("posts").child(viewCollection.postmodel.getUser_id())
-                .child(viewCollection.postmodel.getPost_id())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseRef.child("posts");
+        firebaseRef.child(viewCollection.postmodel.getUser_id());
+        firebaseRef.child(viewCollection.postmodel.getPost_id());
+        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -156,8 +204,13 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                         .child(viewCollection.postmodel.getDate_created()).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        viewCollection.postImageView.setImageBitmap(bmp);
+                        final Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        ((Activity)getContext()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                viewCollection.postImageView.setImageBitmap(bmp);
+                            }
+                        });
                     }
                 });
 
