@@ -105,5 +105,6 @@
     <string name="field_pid">post_id</string>
     <string name="field_text">text</string>
     <string name="field_uid">user_id</string>
+    <string name="field_like_node">likes</string>
 
 </resources>

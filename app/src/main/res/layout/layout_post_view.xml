@@ -66,13 +66,28 @@
             android:id="@+id/post_bar2"
             android:layout_below="@id/post_text">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:id="@+id/like_bottom_image"
-                android:src="@drawable/ic_heart_outline"
+                android:id="@+id/like_bottom_container"
                 android:layout_marginLeft="10dp"
-                android:clickable="true" />
+                >
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/like_bottom_image"
+                    android:src="@drawable/ic_heart_outline"
+                    android:clickable="true" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/like_bottom_image_likedStatus"
+                    android:src="@drawable/ic_heart_outline_red"
+                    android:clickable="true"
+                    android:visibility="invisible"/>
+
+            </RelativeLayout>
+
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
