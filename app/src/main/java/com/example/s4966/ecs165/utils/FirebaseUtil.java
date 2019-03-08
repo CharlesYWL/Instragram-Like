@@ -168,20 +168,8 @@ public class FirebaseUtil {
         });
     }
 
-    public void removeLikeToPost(Postmodel post, final FeedListAdapter adapter){
+    public void removeLikeToPost(){
         // TODO now need to finish this
-        String currentUserId = auth.getCurrentUser().getUid();
-        databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
-                .child(post.getUser_id())
-                .child(post.getPost_id())
-                .child(context.getString(R.string.field_like_node))
-                .child(currentUserId)
-                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
 

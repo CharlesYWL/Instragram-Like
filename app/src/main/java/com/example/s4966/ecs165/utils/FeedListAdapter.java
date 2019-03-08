@@ -143,7 +143,7 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             viewCollection.likeImageViewLiked.setVisibility(View.INVISIBLE);
             viewCollection.likeImageView.setVisibility(View.VISIBLE);
 
-            firebaseUtil.removeLikeToPost(viewCollection.postmodel, this);
+            firebaseUtil.removeLikeToPost();
         }
     }
 
