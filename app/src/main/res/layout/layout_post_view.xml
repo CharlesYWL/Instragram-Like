@@ -20,7 +20,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:id="@+id/post_profile_photo"
-                android:src="@drawable/sixsixsix"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
                 app:civ_border_color="@color/black"
@@ -53,8 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/post_bar"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sixsixsix" />
+            android:scaleType="centerCrop"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
