@@ -130,15 +130,20 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
         Toast.makeText(getContext(), "enter onClick Like button", Toast.LENGTH_SHORT).show();
 
+        FirebaseUtil firebaseUtil = new FirebaseUtil(getContext());
         // TODO testONly
         if(viewCollection.likeImageView.getVisibility() == View.VISIBLE){
             Toast.makeText(getContext(), "is visible", Toast.LENGTH_SHORT).show();
             viewCollection.likeImageViewLiked.setVisibility(View.VISIBLE);
             viewCollection.likeImageView.setVisibility(View.INVISIBLE);
+
+            firebaseUtil.addLikeToPost(viewCollection.postmodel, this);
         }else{
             Toast.makeText(getContext(), "not visible", Toast.LENGTH_SHORT).show();
             viewCollection.likeImageViewLiked.setVisibility(View.INVISIBLE);
             viewCollection.likeImageView.setVisibility(View.VISIBLE);
+
+            firebaseUtil.removeLikeToPost();
         }
     }
 

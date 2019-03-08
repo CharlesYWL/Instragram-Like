@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 
 import com.example.s4966.ecs165.MainActivity;
+import com.example.s4966.ecs165.R;
 import com.example.s4966.ecs165.models.Postmodel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -149,6 +150,28 @@ public class FirebaseUtil {
         });
 
     }
+
+
+    public void addLikeToPost(Postmodel post, final FeedListAdapter adapter){
+        //TODO now need to finish this
+        String currentUserId = auth.getCurrentUser().getUid();
+        databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
+                .child(post.getUser_id())
+                .child(post.getPost_id())
+                .child(context.getString(R.string.field_like_node))
+                .child(currentUserId)
+                .setValue(currentUserId).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public void removeLikeToPost(){
+        // TODO now need to finish this
+    }
+
 
     private void uploadPostInfoToDatabase(String timestamp, String text, String url){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
