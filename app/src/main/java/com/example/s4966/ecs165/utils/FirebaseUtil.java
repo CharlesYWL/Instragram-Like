@@ -153,7 +153,6 @@ public class FirebaseUtil {
 
 
     public void addLikeToPost(Postmodel post, final FeedListAdapter adapter){
-        //TODO now need to finish this
         String currentUserId = auth.getCurrentUser().getUid();
         databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
                 .child(post.getUser_id())
@@ -169,7 +168,6 @@ public class FirebaseUtil {
     }
 
     public void removeLikeToPost(Postmodel post, final FeedListAdapter adapter){
-        // TODO now need to finish this
         String currentUserId = auth.getCurrentUser().getUid();
         databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
                 .child(post.getUser_id())
@@ -184,6 +182,9 @@ public class FirebaseUtil {
         });
     }
 
+    public void addCommandToPost(Postmodel post, final FeedListAdapter adapter){
+        //TODO
+    }
 
     private void uploadPostInfoToDatabase(String timestamp, String text, String url){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");

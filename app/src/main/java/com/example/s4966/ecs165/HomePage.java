@@ -100,8 +100,6 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
                 }
 
                 getPosts();
-//                getMyUserAccountSettings();
-                //getFriendsAccountSettings();
             }
 
             @Override
@@ -145,28 +143,8 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
                         newPost.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
 
                         Log.d(TAG, "getPhotos: photo: " + newPost.getPost_id());
-                        /*
-                        List<CommentModel> commentsList = new ArrayList<CommentModel>();
-                        for (DataSnapshot dSnapshot : singleSnapshot
-                                .child(getString(R.string.field_comments)).getChildren()){
-                            Map<String, Object> object_map = (HashMap<String, Object>) dSnapshot.getValue();
-                            Comment comment = new Comment();
-                            comment.setUser_id(object_map.get(getString(R.string.field_user_id)).toString());
-                            comment.setComment(object_map.get(getString(R.string.field_comment)).toString());
-                            comment.setDate_created(object_map.get(getString(R.string.field_date_created)).toString());
-                            commentsList.add(comment);
-
-                        }
-
-                        newPost.setComments(commentsList);
-                        */
                         postmodels.add(newPost);
                     }
-                    /*
-                    if(count >= mFollowing.size() - 1){
-                        //display the photos
-                        displayPhotos();
-                    }*/
                     presentPostList();
                 }
 
@@ -180,9 +158,7 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
 
     private void presentPostList(){
         if(postmodels != null){
-
             try{
-
                 //sort for newest to oldest
                 Collections.sort(postmodels, new Comparator<Postmodel>() {
                     public int compare(Postmodel o1, Postmodel o2) {
@@ -190,21 +166,6 @@ public class HomePage extends Fragment implements OnUpdateListener, OnLoadListen
                     }
                 });
 
-                //we want to load 10 at a time. So if there is more than 10, just load 10 to start
-                /*
-                int iterations = mPhotos.size();
-                if(iterations > 10){
-                    iterations = 10;
-                }
-
-//
-                //resultsCount = 0;
-                for(int i = 0; i < iterations; i++){
-                    mPaginatedPhotos.add(mPhotos.get(i));
-                    resultsCount++;
-                    Log.d(TAG, "displayPhotos: adding a photo to paginated list: " + mPhotos.get(i).getPhoto_id());
-                }
-                */
 
                 adapter = new FeedListAdapter(getActivity(), R.layout.layout_post_view, postmodels);
                 mainFeedListView.setAdapter(adapter);

@@ -1,11 +1,14 @@
 package com.example.s4966.ecs165.utils;
 
+import com.example.s4966.ecs165.CommentPage;
+import com.example.s4966.ecs165.HomePage;
 import com.example.s4966.ecs165.R;
 import com.example.s4966.ecs165.SquareImageView;
 import com.example.s4966.ecs165.models.Postmodel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -65,6 +68,7 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
         ImageView likeImageView;
         ImageView likeImageViewLiked;
         Postmodel postmodel;
+        ImageView replayImageView;
     }
 
 
@@ -83,6 +87,7 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             viewCollection.likeImageContainer = convertView.findViewById(R.id.like_bottom_container);
             viewCollection.likeImageView =convertView.findViewById(R.id.like_bottom_image);
             viewCollection.likeImageViewLiked = convertView.findViewById(R.id.like_bottom_image_likedStatus);
+            viewCollection.replayImageView = convertView.findViewById(R.id.reply_button_image);
 
             convertView.setTag(viewCollection);
         }else{
@@ -97,6 +102,7 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                 updatePostLike(viewCollection);
             }
         });
+        //click on like
         viewCollection.likeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,16 +112,18 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                         updatePostLike(viewCollection);
                     }
                 });
-                /*
-                if(temp == 0) {
-                    viewCollection.likeImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_heart_outline_red));
-                }else if(temp == 1){
-                    viewCollection.likeImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_heart_outline));
-                }
-                temp = (temp + 1)%2;
-                */
             }
         });
+        //click on reply
+        viewCollection.replayImageView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getContext(),CommentPage.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+
 
         return convertView;
     }
