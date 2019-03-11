@@ -9,4 +9,41 @@
         layout="@layout/layout_toolbar"
         android:id="@+id/toolbar"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottomLine">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/bottomLine"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/comment_view_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.85"
+            android:ems="10"
+            android:hint="Comment"
+            android:inputType="textPersonName"
+            android:layout_marginStart="3sp"/>
+
+        <Button
+            android:id="@+id/send_comment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:background="@drawable/white_rounded_button"
+            android:text="Send"
+            android:layout_marginEnd="3sp"/>
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

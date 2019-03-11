@@ -3,11 +3,18 @@ package com.example.s4966.ecs165;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.hardware.Camera;
+import android.hardware.camera2.CaptureRequest;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.renderscript.Sampler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +28,12 @@ import android.widget.Toast;
 
 import com.example.s4966.ecs165.utils.FirebaseUtil;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Post extends AppCompatActivity {
 
@@ -89,10 +102,13 @@ public class Post extends AppCompatActivity {
                             startActivityForResult(iGallery,PICK_GALLERY);
                         }
                         else {
+                           /*  //TODO: Version.1
                             Intent iCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             if(iCamera.resolveActivity(getPackageManager()) != null){
                                 startActivityForResult(iCamera,REQUEST_IMAGE_CAPTURE);
-                            }
+                            } */
+                            //TODO:Version.2
+                            highResCamera();
                         }
                     }
                 }).create().show();
@@ -109,10 +125,18 @@ public class Post extends AppCompatActivity {
                     imageButton.setImageURI(imageURi);
                     break;
                 case REQUEST_IMAGE_CAPTURE:
-                    Toast.makeText(getApplicationContext(), "take picture", Toast.LENGTH_SHORT).show();
+                    /*   Toast.makeText(getApplicationContext(), "take picture", Toast.LENGTH_SHORT).show();
                     Bundle extras = data.getExtras();
                     Bitmap bitmap = (Bitmap)extras.get("data");
-                    imageButton.setImageBitmap(bitmap);
+                    imageButton.setImageBitmap(bitmap); Finished */
+                    //Version.2 OK
+                    Toast.makeText(getApplicationContext(), "take picture", Toast.LENGTH_SHORT).show();
+                    try{
+                        Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(imageURi));
+                        imageButton.setImageBitmap(compressImage(bitmap));
+                    }catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
@@ -137,4 +161,54 @@ public class Post extends AppCompatActivity {
 
     }
 
+    public void highResCamera(){
+
+        File outImage=new File(getExternalCacheDir(),"output_image.jpg");
+        try{
+            if(outImage.exists()) {
+                outImage.delete();
+            }
+            outImage.createNewFile();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(Build.VERSION.SDK_INT>=24) {
+            imageURi= FileProvider.getUriForFile(Post.this,"com.example.s4966.ecs165.fileprovider",outImage);
+        }
+        else {
+            imageURi=Uri.fromFile(outImage);
+        }
+        Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageURi);
+        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+    }
+
+    //used for rotate bitmap
+    public static Bitmap rotateBitmap(Bitmap bitmap, int degress) {
+        if (bitmap != null){
+            Matrix m = new Matrix();
+            m.postRotate(degress);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m,
+                    true);
+            return bitmap;
+        }
+        return bitmap;
+
+    }
+
+
+    public static Bitmap compressImage(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 90;
+        while (baos.toByteArray().length / 1024 > 2048) { // 循环判断如果压缩后图片是否大于 2M,大于继续压缩
+            baos.reset(); // 重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+            options -= 10;// 每次都减少10
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
+        return bitmap;
+    }
 }
