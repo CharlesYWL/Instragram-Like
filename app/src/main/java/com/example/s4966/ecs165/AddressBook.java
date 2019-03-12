@@ -146,7 +146,6 @@ public class AddressBook extends Fragment {
             //    return;
 
             final Semaphore semaphore = new Semaphore(1);
-            // TODO there is a hard image size limit, may fix it in future.
             final long TEN_MEGABYTE = 10 * 1024 * 1024;
             StorageReference storagePicNode = storageReference.child("pic");
             storagePicNode.child(uid).getBytes(TEN_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

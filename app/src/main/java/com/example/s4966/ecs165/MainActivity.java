@@ -132,8 +132,6 @@ public class MainActivity extends AppCompatActivity {
             transaction.add(R.id.mainview, fragments[index]);
         }
         transaction.show(fragments[index]).commitAllowingStateLoss();
-        //for test
-        Toast.makeText(MainActivity.this,"Trans fragment from "+lastfragment+" to "+index,Toast.LENGTH_LONG).show();
     }
 
 
