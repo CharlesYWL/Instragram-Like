@@ -1,8 +1,5 @@
 package com.example.s4966.ecs165.utils;
 
-import com.bumptech.glide.Glide;
-import com.example.s4966.ecs165.AddressBook;
-import com.example.s4966.ecs165.MainActivity;
 import com.example.s4966.ecs165.R;
 import com.example.s4966.ecs165.ShowPosts;
 import com.example.s4966.ecs165.SquareImageView;
@@ -13,9 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,19 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -141,7 +136,6 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
     private void updatePostLike(PostViewCollection viewCollection){
 
-
         Toast.makeText(getContext(), "enter onClick Like button", Toast.LENGTH_SHORT).show();
 
         FirebaseUtil firebaseUtil = new FirebaseUtil(getContext());
@@ -240,16 +234,31 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
 
             }
         });
-
-
-        checkLikeButton();
+        fetchLikeButton(viewCollection);
     }
 
     /*
     * It will check if user like the post
-    * TODO:do it after we figure out how to add like into post
     * */
-    public void checkLikeButton(){
-
+    public void fetchLikeButton(final PostViewCollection viewCollection){
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query query = databaseReference.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH).child(viewCollection.postmodel.getUser_id().toString())
+                .child(viewCollection.postmodel.getPost_id()).child("likes");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(currentUser.getUid()).exists()){
+                    viewCollection.likeImageView.setVisibility(View.INVISIBLE);
+                    viewCollection.likeImageViewLiked.setVisibility(View.VISIBLE);
+                } else{
+                    viewCollection.likeImageView.setVisibility(View.VISIBLE);
+                    viewCollection.likeImageViewLiked.setVisibility(View.INVISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 }
