@@ -1,5 +1,8 @@
 package com.example.s4966.ecs165.models;
 
+import com.example.s4966.ecs165.utils.FirebasePaths;
+import com.example.s4966.ecs165.utils.FirebaseUtil;
+
 import java.util.List;
 
 public class Postmodel {
@@ -12,6 +15,16 @@ public class Postmodel {
     private List<LikeModel> likes;
     private List<CommentModel> comments;
 
+    /**
+     *
+     * @return the corresponding path in Firebase storage
+     */
+    public String getStorageImagePath(){
+        String path = FirebasePaths.FIREBASE_POSTIMAGE_STORAGE_PATH + "/users"
+                + "/" + user_id
+                + "/" + date_created;
+        return path;
+    }
     public Postmodel(String text, String date_created, String image_path, String post_id, String user_id, String tags, List<LikeModel> likes, List<CommentModel> comments) {
         this.text = text;
         this.date_created = date_created;

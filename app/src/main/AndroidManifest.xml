@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
         <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".ShowPosts" />
         <activity android:name=".SearchResult" />
         <activity android:name=".SearchUser" />
         <activity android:name=".Post" />

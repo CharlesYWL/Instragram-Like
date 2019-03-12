@@ -4,11 +4,13 @@ import com.bumptech.glide.Glide;
 import com.example.s4966.ecs165.AddressBook;
 import com.example.s4966.ecs165.MainActivity;
 import com.example.s4966.ecs165.R;
+import com.example.s4966.ecs165.ShowPosts;
 import com.example.s4966.ecs165.SquareImageView;
 import com.example.s4966.ecs165.models.Postmodel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -119,6 +121,18 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
                 }
                 temp = (temp + 1)%2;
                 */
+            }
+        });
+
+        final Postmodel tmp = getItem(position);
+        viewCollection.profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "get into on click", Toast.LENGTH_SHORT);
+
+                Intent intent = new Intent(getContext(), ShowPosts.class);
+                intent.putExtra("uid", tmp.getUser_id());
+                getContext().startActivity(intent);
             }
         });
 
