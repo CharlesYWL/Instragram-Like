@@ -47,7 +47,7 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
     private ArrayList<String> followingUsers; // String is their user_id
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
     @Override

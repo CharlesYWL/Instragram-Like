@@ -108,6 +108,14 @@ public class AddressBook extends Fragment {
                 holder.setName(model);
                 holder.setPhoto(model);
                 //on Click listener
+                holder.mPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(),ShowPosts.class);
+                        intent.putExtra("uid",model);
+                        startActivity(intent);
+                    }
+                });
 
             }
         };

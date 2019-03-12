@@ -49,30 +49,33 @@ public class SearchResult extends AppCompatActivity {
     private String target;
     private DatabaseReference userRef;
     private StorageReference storageReference;
+
     //need to use for every class
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_nomenu, menu);
         return true;
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         //start listener
         adapter.startListening();
     }
+
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         adapter.stopListening();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
         //toolbar apply to all
-        mToolbar=findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setBackWork(mToolbar);
@@ -84,23 +87,23 @@ public class SearchResult extends AppCompatActivity {
         userRef.keepSynced(true);
         storageReference = FirebaseStorage.getInstance().getReference();
         //DatabaseReference userRef2 = FirebaseDatabase.getInstance().getReference().child("users");
-        userList=findViewById(R.id.recyclerView);
+        userList = findViewById(R.id.recyclerView);
 
 
-        if(!target.contains("@"))
-            DisplayAllUser(target,"username");
+        if (!target.contains("@"))
+            DisplayAllUser(target, "username");
         else
-            DisplayAllUser(target,"email");
+            DisplayAllUser(target, "email");
 
     }
 
-    private void DisplayAllUser(String target,String root){
+    private void DisplayAllUser(String target, String root) {
 
         //main filter to select
         Query query = userRef.orderByChild(root).equalTo(target);
         FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
-                        .setQuery(query,User.class)
+                        .setQuery(query, User.class)
                         .build();
         adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
             @Override
@@ -122,7 +125,6 @@ public class SearchResult extends AppCompatActivity {
                 holder.imb.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-                        //TODO: follow action, add in follow Node.
                         Toast.makeText(SearchResult.this,"Added",Toast.LENGTH_SHORT).show();
                         holder.setButton(true);
 
@@ -133,10 +135,19 @@ public class SearchResult extends AppCompatActivity {
                                 startActivity(new Intent(getBaseContext(),SearchUser.class));
                             }
                         },1000);
-
-
                     }
                 });
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(SearchResult.this, "Show post", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getBaseContext(),ShowPosts.class);
+                        intent.putExtra("uid",model.getUid());
+                        startActivity(intent);
+                    }
+                });
+
+
             }
         };
 
@@ -146,7 +157,7 @@ public class SearchResult extends AppCompatActivity {
         userList.setAdapter(adapter);
     }
 
-    public void setBackWork(Toolbar tb){
+    public void setBackWork(Toolbar tb) {
         getSupportActionBar().setTitle("Search Result");
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,19 +167,22 @@ public class SearchResult extends AppCompatActivity {
         });
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder{
+    public class UserViewHolder extends RecyclerView.ViewHolder {
         View mView;
         String TAG = "UserViewHolder";
+        public ImageView imageView;
         public ImageButton imb;
-        public UserViewHolder(View itemView){
+
+        public UserViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             imb = mView.findViewById(R.id.imageButton);
+            imageView = mView.findViewById(R.id.Photo);
         }
 
-        public void setPhoto(String photoID){
+        public void setPhoto(String photoID) {
             final ImageView photo = mView.findViewById(R.id.Photo);
-            if (photoID==null)
+            if (photoID == null)
                 return;
 
             final Semaphore semaphore = new Semaphore(1);
@@ -185,49 +199,51 @@ public class SearchResult extends AppCompatActivity {
         }
 
 
-        public void setName(String name){
+        public void setName(String name) {
             TextView uname = mView.findViewById(R.id.Name);
             uname.setText(name);
         }
 
 
-        public void setButton(boolean flag){
+        public void setButton(boolean flag) {
             Drawable grayD = getResources().getDrawable(R.drawable.gray_added);
             Drawable greenD = getResources().getDrawable(R.drawable.green_add);
-            if (flag){
+            if (flag) {
                 imb.setImageDrawable(grayD);
                 imb.setClickable(false);
-            }else{
+            } else {
                 imb.setImageDrawable(greenD);
                 imb.setClickable(true);
             }
         }
-        public void setButton_check(final String uid){
+
+        public void setButton_check(final String uid) {
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("follows");
             DatabaseReference query = rootRef.child(currentUser.getUid());
             query.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot){
+                public void onDataChange(DataSnapshot dataSnapshot) {
                     boolean flag = false;
-                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Toast.makeText(getApplicationContext(),"check "+ds.getValue(),Toast.LENGTH_SHORT).show();
-                        if(equal(ds.getValue().toString(),uid))
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Toast.makeText(getApplicationContext(), "check " + ds.getValue(), Toast.LENGTH_SHORT).show();
+                        if (equal(ds.getValue().toString(), uid))
                             flag = true;
                     }
-                    if(flag) {
-                        Toast.makeText(getApplicationContext(),"enter OndataChagne exists",Toast.LENGTH_SHORT).show();
+                    if (flag) {
+                        Toast.makeText(getApplicationContext(), "enter OndataChagne exists", Toast.LENGTH_SHORT).show();
                         imb.setImageDrawable(getResources().getDrawable(R.drawable.gray_added));
                         imb.setClickable(false);
-                    }else {
-                        Toast.makeText(getApplicationContext(),"enter OndataChagne noexists",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "enter OndataChagne noexists", Toast.LENGTH_SHORT).show();
                         imb.setImageDrawable(getResources().getDrawable(R.drawable.green_add));
                         imb.setClickable(true);
                     }
                 }
+
                 @Override
-                public void onCancelled(DatabaseError databaseError){
-                    Log.w(TAG,"Setbutton_check failed",databaseError.toException());
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "Setbutton_check failed", databaseError.toException());
                 }
 
             });
