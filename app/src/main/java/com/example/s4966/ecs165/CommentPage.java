@@ -1,6 +1,8 @@
 package com.example.s4966.ecs165;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ public class CommentPage extends AppCompatActivity{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
     //need to use for every class
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar_nomenu,menu);
@@ -57,8 +61,17 @@ public class CommentPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_page);
         init();
-        displayCommentList();
         SendButtonListener();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your recyclerview reload logic function will be here!!!
+               adapter.onDataChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        displayCommentList();
+
     }
 
     public void displayCommentList(){
@@ -68,10 +81,15 @@ public class CommentPage extends AppCompatActivity{
                         .setQuery(query,CommentModel.class)
                         .build();
         adapter = new CommentListAdapter(options){};
-        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        //TODO:Not a right way to refresh recycleView
+       // InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+       // imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
     //when click the button
@@ -88,7 +106,6 @@ public class CommentPage extends AppCompatActivity{
                     final CommentModel commentModel = new CommentModel(comment.getText().toString(),uti.getUserID().toString(),time,uid,pid,null);
                     uti.addCommandToPost(pid,uid,commentModel);
                     comment.setText("");
-
                 }
             }
         });
@@ -123,10 +140,11 @@ public class CommentPage extends AppCompatActivity{
         comment = findViewById(R.id.comment_view_holder);
         uti = new FirebaseUtil(this);
         recyclerView = findViewById(R.id.commentlist);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
     }
 
     private String getTimestamp(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss", Locale.CANADA);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm", Locale.CANADA);
         sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
         return sdf.format(new Date());
     }
