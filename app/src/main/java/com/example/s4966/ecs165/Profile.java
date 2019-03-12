@@ -7,12 +7,17 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.example.s4966.ecs165.models.LikeModel;
+import com.example.s4966.ecs165.models.Postmodel;
 import com.example.s4966.ecs165.models.User;
+import com.example.s4966.ecs165.utils.FirebasePaths;
+import com.example.s4966.ecs165.utils.ProfilePostsAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,10 +25,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 
@@ -35,6 +42,7 @@ public class Profile extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
+
     private ImageButton SignoutButton;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
@@ -44,7 +52,8 @@ public class Profile extends AppCompatActivity {
     private TextView genderTextView;
     private TextView bioTextView;
     private ImageView imageView;
-
+    private GridView gridView;
+    private ArrayList<Postmodel> posts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +74,7 @@ public class Profile extends AppCompatActivity {
          genderTextView = findViewById(R.id.gender_textView);
          bioTextView= findViewById(R.id.bio_textView);
          imageView = findViewById(R.id.pic_imageview);
+         //gridView = findViewById(R.id.profile_grid_view);
 
          if(user == null) { // for some rare case
              Intent intent = new Intent().setClass(Profile.this,LoginActivity.class);
@@ -137,8 +147,9 @@ public class Profile extends AppCompatActivity {
         });
         //make sure it has user
 
+        // set up grid view
+        //setupPostGrid();
     }
-
 
 
     //make back Navi on tool bar works and direction

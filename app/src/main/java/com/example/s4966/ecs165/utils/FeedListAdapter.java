@@ -3,6 +3,7 @@ package com.example.s4966.ecs165.utils;
 import com.example.s4966.ecs165.CommentPage;
 import com.example.s4966.ecs165.HomePage;
 import com.example.s4966.ecs165.R;
+import com.example.s4966.ecs165.ShowPosts;
 import com.example.s4966.ecs165.SquareImageView;
 import com.example.s4966.ecs165.models.Postmodel;
 
@@ -127,6 +128,18 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
         });
 
 
+
+        final Postmodel tmp = getItem(position);
+        viewCollection.profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "get into on click", Toast.LENGTH_SHORT);
+
+                Intent intent = new Intent(getContext(), ShowPosts.class);
+                intent.putExtra("uid", tmp.getUser_id());
+                getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }

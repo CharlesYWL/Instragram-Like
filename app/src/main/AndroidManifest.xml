@@ -32,6 +32,7 @@
 
         <activity android:name=".CommentPage"></activity>
         <activity android:name=".ResetPassword" />
+        <activity android:name=".ShowPosts" />
         <activity android:name=".SearchResult" />
         <activity android:name=".SearchUser" />
         <activity android:name=".Post" />
