@@ -119,6 +119,9 @@ public class FeedListAdapter extends ArrayAdapter<Postmodel> {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getContext(),CommentPage.class);
+                //transfer pid into that Intent
+                intent.putExtra("pid",viewCollection.postmodel.getPost_id());
+                intent.putExtra("uid",viewCollection.postmodel.getUser_id());
                 getContext().startActivity(intent);
             }
         });

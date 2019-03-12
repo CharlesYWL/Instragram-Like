@@ -7,15 +7,18 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
 import com.example.s4966.ecs165.MainActivity;
 import com.example.s4966.ecs165.R;
+import com.example.s4966.ecs165.models.CommentModel;
 import com.example.s4966.ecs165.models.Postmodel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -182,8 +185,18 @@ public class FirebaseUtil {
         });
     }
 
-    public void addCommandToPost(Postmodel post, final FeedListAdapter adapter){
-        //TODO
+    public void addCommandToPost(String pid, String uid, CommentModel comment){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        comment.setPid(databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
+                .child(uid).child(pid).child("comments")
+                .push().getKey());
+        databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
+                .child(uid).child(pid).child("comments").child(comment.getPid())
+                .setValue(comment.toMap());
+        Toast.makeText(context, "Comment sent!", Toast.LENGTH_SHORT).show();
+        //hide keyboard
+        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private void uploadPostInfoToDatabase(String timestamp, String text, String url){
