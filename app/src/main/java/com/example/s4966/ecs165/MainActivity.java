@@ -20,8 +20,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -105,18 +109,19 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser != null) {
             User.updataUid();
             User.updateFMCToken();
+            User.updataFiresotre();
         }
 
     }
 
     public void test(){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        FirebaseFirestore fb = FirebaseFirestore.getInstance();
         DatabaseReference userNode = database.child("users");
         DatabaseReference followsNode = database.child("follows");
         StorageReference storagePicNode = FirebaseStorage.getInstance().getReference().child("pic");
         Drawable image = getResources().getDrawable(R.drawable.sixsixsix, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        //User.getUserFromFireBase(userNode,currentUser.getUid());
     }
 
     private void initFragment()

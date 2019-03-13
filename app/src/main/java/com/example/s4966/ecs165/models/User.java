@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.*;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
@@ -321,10 +323,30 @@ public class User {
                         }
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-
-                         mDatabase.child("users").child(currentUser.getUid()).child("fcmtoken").setValue(token);
+                        //set on RealtimeDatabase
+                        mDatabase.child("users").child(currentUser.getUid()).child("fcmtoken").setValue(token);
                 }
             });
+    }
+
+    public static void updataFiresotre(){
+        final FirebaseFirestore fb = FirebaseFirestore.getInstance();
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String,Object> usermap = new HashMap<>();
+                usermap.put("username",dataSnapshot.child("username").getValue().toString());
+                usermap.put("fcmtoken",dataSnapshot.child("fcmtoken").getValue().toString());
+                usermap.put("uid",dataSnapshot.child("uid").getValue().toString());
+                fb.collection("users").document(dataSnapshot.getKey()).set(usermap);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("updataFirestore"," fail");
+            }
+        });
     }
 }
 
