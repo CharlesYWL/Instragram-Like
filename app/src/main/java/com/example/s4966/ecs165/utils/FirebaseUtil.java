@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.s4966.ecs165.MainActivity;
 import com.example.s4966.ecs165.R;
 import com.example.s4966.ecs165.models.CommentModel;
+import com.example.s4966.ecs165.models.PostTracer;
 import com.example.s4966.ecs165.models.Postmodel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +31,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -97,6 +99,24 @@ public class FirebaseUtil {
     //vars
     //private Context mContext;
     //private double mPhotoUploadProgress = 0;
+
+    public ArrayList<String> getHashTags(String text){
+        ArrayList<String> tags = new ArrayList<>();
+        String[] segments = text.split("#");
+        if(segments.length == 1){
+            return tags;
+        }
+        for(int i = 1; i < segments.length; i++){
+            String tag = getFirstWord(segments[i]);
+            tags.add(tag);
+        }
+        return tags;
+    }
+
+    private String getFirstWord(String s){
+        String result = s.split(" ")[0];
+        return result.toLowerCase();
+    }
 
     public FirebaseUtil(Context context){
         this.context = context;
@@ -220,6 +240,16 @@ public class FirebaseUtil {
                 .child(newPostKey)
                 .setValue(post);
         //databaseRef.child(FirebasePaths.FIREBASE_POST_DATABASE_PATH).child(newPostKey).setValue(post);
+
+        // gather hashtag info
+        PostTracer tracer = new PostTracer(post);
+        ArrayList<String> tags = getHashTags(post.getText());
+        for(String tag : tags){
+            databaseRef.child(FirebasePaths.FIREBASE_HASHTAG_PATH)
+                    .child(tag)
+                    .push()
+                    .setValue(tracer);
+        }
     }
 
     // timestamp used as post image id
