@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.example.s4966.ecs165.models.User;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -101,8 +102,10 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //test();
-        if(currentUser != null)
+        if(currentUser != null) {
             User.updataUid();
+            User.updateFMCToken();
+        }
 
     }
 
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(MainActivity.this,SearchUser.class);
         startActivity(intent);
     }
+
 
     //nullify back behavior
     @Override

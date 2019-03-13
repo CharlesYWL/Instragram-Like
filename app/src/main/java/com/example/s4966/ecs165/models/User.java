@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.s4966.ecs165.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.*;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -24,6 +28,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+
+import static android.provider.Settings.System.getString;
 
 public class User {
     public enum GENDER {MALE, FEMALE,UNKNOWN}
@@ -37,7 +43,15 @@ public class User {
     private String TAG = "User class";
     //pictureId should always be the same with uid, if exists a picture;
     private String pictureId;
+    private String fcmtoken;
 
+    public String getFcmtoken() {
+        return fcmtoken;
+    }
+
+    public void setFcmtoken(String fcmtoken) {
+        this.fcmtoken = fcmtoken;
+    }
     /**
      * Constructor for the User class.
      * @param usernameStr username string
@@ -142,6 +156,7 @@ public class User {
         }
         user.updataFireBase(databaseUserNode,storagePicNode);
     }
+
 
     //cannot run for some reasons
     //TODO fix it
@@ -292,7 +307,24 @@ public class User {
 
         mDatabase.child("users").child(currentUser.getUid()).child("uid").setValue(currentUser.getUid());
     }
+    public static void updateFMCToken(){
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [START retrieve_current_token]
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("updateFMCToken", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
 
-
+                         mDatabase.child("users").child(currentUser.getUid()).child("fcmtoken").setValue(token);
+                }
+            });
+    }
 }
 

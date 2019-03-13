@@ -10,6 +10,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.s4966.ecs165.R;
+import com.example.s4966.ecs165.utils.FirebaseUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -97,6 +100,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
+        FirebaseUtil uti = new FirebaseUtil(getApplication());
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        uti.getDatabaseRef().child("fmcgroup").child(currentUser.getUid()).setValue(token);
     }
 }

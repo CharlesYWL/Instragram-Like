@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,6 +56,15 @@ public class SearchUser extends AppCompatActivity {
         searchB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+
+                if(target.getText().toString().contains("#")){
+                    Intent intent = new Intent(getApplicationContext(),ShowPosts.class);
+                    //test only
+                    FirebaseUser cu = FirebaseAuth.getInstance().getCurrentUser();
+                    intent.putExtra("uid",cu.getUid());
+                    startActivity(intent);
+                    return;
+                }
 
                 //search start
                 //TODO: now we dont judge it, just enter result page with every one display
