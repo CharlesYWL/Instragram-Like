@@ -9,6 +9,11 @@ public class PostTracer {
         this.uid = uid;
     }
 
+    public PostTracer(){
+        this.pid = null;
+        this.uid = null;
+    }
+
     public PostTracer(Postmodel post){
         this.pid = post.getPost_id();
         this.uid = post.getUser_id();

@@ -61,7 +61,9 @@ public class SearchUser extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(),ShowPosts.class);
                     //test only
                     FirebaseUser cu = FirebaseAuth.getInstance().getCurrentUser();
-                    intent.putExtra("uid",cu.getUid());
+                    intent.putExtra("uid", (String)null);
+                    intent.putExtra("hashtag", target.getText().toString());
+                    Log.d(TAG, "hashtag is: " + target.getText().toString());
                     startActivity(intent);
                     return;
                 }
