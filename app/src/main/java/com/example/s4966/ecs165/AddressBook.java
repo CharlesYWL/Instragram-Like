@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.example.s4966.ecs165.utils.FirebaseUtil;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +44,7 @@ import java.util.concurrent.Semaphore;
 import static com.google.android.gms.common.internal.Objects.equal;
 
 
-public class AddressBook extends Fragment {
+public class AddressBook extends Fragment{
     private static final String TAG = "AddressBook";
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -115,13 +116,13 @@ public class AddressBook extends Fragment {
                         startActivity(intent);
                     }
                 });
-
                 holder.unfollowText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
+                        deleteFollow(model);
                     }
                 });
+
 
             }
         };
@@ -142,6 +143,7 @@ public class AddressBook extends Fragment {
         recyclerView = getView().findViewById(R.id.addressRecycleView);
     }
 
+
     public class FollowViewHolder extends RecyclerView.ViewHolder{
         View mView;
         TextView mTextView,unfollowText;
@@ -152,7 +154,7 @@ public class AddressBook extends Fragment {
             mView = itemView;
             mTextView = mView.findViewById(R.id.Name);
             mPhoto = mView.findViewById(R.id.Photo);
-            unfollowText = mTextView.findViewById(R.id.unfollow);
+            unfollowText = mView.findViewById(R.id.unfollow);
         }
 
         public void setPhoto(String uid){
@@ -185,6 +187,27 @@ public class AddressBook extends Fragment {
             userRef.child("test").setValue("123");
             userRef.child("test").setValue(null);
         }
+    }
+
+    public void deleteFollow(final String unfollowId){
+        final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        final FirebaseUser cu = FirebaseAuth.getInstance().getCurrentUser();
+        Query query =  db.child("follows").child(cu.getUid().toString());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds:  dataSnapshot.getChildren()){
+                    if(equal(ds.getValue().toString(), unfollowId)) {
+                        String key = ds.getKey();
+                        db.child("follows").child(cu.getUid().toString()).child(key).setValue(null);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return;
     }
 }
 
