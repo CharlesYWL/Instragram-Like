@@ -253,7 +253,11 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
 
 
     public void setBackWork(Toolbar tb){
-        getSupportActionBar().setTitle("Personal Posts");
+        if(this.uid != null) {
+            getSupportActionBar().setTitle("Personal Posts");
+        }else{
+            getSupportActionBar().setTitle("Search Result");
+        }
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
