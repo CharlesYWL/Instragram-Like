@@ -140,7 +140,6 @@ public class SearchResult extends AppCompatActivity {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(SearchResult.this, "Show post", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getBaseContext(),ShowPosts.class);
                         intent.putExtra("uid",model.getUid());
                         startActivity(intent);
@@ -226,16 +225,13 @@ public class SearchResult extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boolean flag = false;
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Toast.makeText(getApplicationContext(), "check " + ds.getValue(), Toast.LENGTH_SHORT).show();
                         if (equal(ds.getValue().toString(), uid))
                             flag = true;
                     }
                     if (flag) {
-                        Toast.makeText(getApplicationContext(), "enter OndataChagne exists", Toast.LENGTH_SHORT).show();
                         imb.setImageDrawable(getResources().getDrawable(R.drawable.gray_added));
                         imb.setClickable(false);
                     } else {
-                        Toast.makeText(getApplicationContext(), "enter OndataChagne noexists", Toast.LENGTH_SHORT).show();
                         imb.setImageDrawable(getResources().getDrawable(R.drawable.green_add));
                         imb.setClickable(true);
                     }

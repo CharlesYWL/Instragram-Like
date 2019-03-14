@@ -77,7 +77,6 @@ public class Post extends AppCompatActivity {
             public void onClick(View v) {
                 Drawable d = imageButton.getDrawable();
                 String words = word.getText().toString();
-                //TODO: link to Postmodel.class funtion to push to firebase
                 Toast.makeText(Post.this, words, Toast.LENGTH_SHORT).show();
                 FirebaseUtil uti = new FirebaseUtil(getApplicationContext());
                 uti.uploadNewPost(words,d);
@@ -120,17 +119,10 @@ public class Post extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             switch (requestCode){
                 case PICK_GALLERY:
-                    Toast.makeText(getApplicationContext(), "choose from gallery", Toast.LENGTH_SHORT).show();
                     imageURi = data.getData();
                     imageButton.setImageURI(imageURi);
                     break;
                 case REQUEST_IMAGE_CAPTURE:
-                    /*   Toast.makeText(getApplicationContext(), "take picture", Toast.LENGTH_SHORT).show();
-                    Bundle extras = data.getExtras();
-                    Bitmap bitmap = (Bitmap)extras.get("data");
-                    imageButton.setImageBitmap(bitmap); Finished */
-                    //Version.2 OK
-                    Toast.makeText(getApplicationContext(), "take picture", Toast.LENGTH_SHORT).show();
                     try{
                         Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(imageURi));
                         imageButton.setImageBitmap(compressImage(bitmap));

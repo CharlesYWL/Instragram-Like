@@ -93,7 +93,6 @@ public class ProfileModify extends AppCompatActivity {
         mDatabase.child("users").child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(ProfileModify.this,"Enter one time Listener",Toast.LENGTH_LONG).show();
                 User us = dataSnapshot.getValue(User.class);
                 us.setUid(mUser.getUid());
                 updataUI(us);
@@ -167,6 +166,13 @@ public class ProfileModify extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void logout(View v){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
+    }
+
     //for choosing gallary or take pic
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
@@ -174,12 +180,10 @@ public class ProfileModify extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             switch (requestCode){
                 case PICK_GALLERY:
-                    Toast.makeText(getApplicationContext(), "choose from gallery", Toast.LENGTH_SHORT).show();
                     imageURi = data.getData();
                     imageView.setImageURI(imageURi);
                     break;
                 case REQUEST_IMAGE_CAPTURE:
-                    Toast.makeText(getApplicationContext(), "take picture", Toast.LENGTH_SHORT).show();
                     Bundle extras = data.getExtras();
                     Bitmap bitmap = (Bitmap)extras.get("data");
                     imageView.setImageBitmap(bitmap);

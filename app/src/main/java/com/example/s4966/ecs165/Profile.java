@@ -48,7 +48,6 @@ public class Profile extends AppCompatActivity {
     private FirebaseUser user;
     private StorageReference storageReference;
     private TextView nameTextView;
-    private TextView uidTextView;
     private TextView genderTextView;
     private TextView bioTextView;
     private ImageView imageView;
@@ -70,7 +69,6 @@ public class Profile extends AppCompatActivity {
          user = FirebaseAuth.getInstance().getCurrentUser();
          storageReference = FirebaseStorage.getInstance().getReference();
          nameTextView = findViewById(R.id.name_textView);
-         uidTextView = findViewById(R.id.uid_textView);
          genderTextView = findViewById(R.id.gender_textView);
          bioTextView= findViewById(R.id.bio_textView);
          imageView = findViewById(R.id.pic_imageview);
@@ -138,8 +136,7 @@ public class Profile extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.setClass(Profile.this,ProfileModify.class);
                         startActivity(intent);
-                        //test only
-                        Toast.makeText(Profile.this,"Enter setting",Toast.LENGTH_LONG).show();
+
                         return true;
                 }
                 return false;
@@ -163,20 +160,12 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    public void logout(View v){
-
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent();
-        intent.setClass(Profile.this,LoginActivity.class);
-        startActivity(intent);
-    }
 
     public void updataUI(User user){
         //User user = new User();
         //User.getUserFromFireBase(user.getUid(),user);
         nameTextView.setText(user.getUsername());
         bioTextView.setText(user.getBio());
-        uidTextView.setText(user.getUid());
         String g="\0";
         switch (user.getGender()){
             case MALE:
@@ -207,6 +196,13 @@ public class Profile extends AppCompatActivity {
     {  // After a pause OR at startup
         super.onResume();
 
+    }
+
+    public void openMyFeed(View view) {
+        FirebaseUser cu = FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent = new Intent(getApplicationContext(),ShowPosts.class);
+        intent.putExtra("uid",cu.getUid().toString());
+        startActivity(intent);
     }
 }
 

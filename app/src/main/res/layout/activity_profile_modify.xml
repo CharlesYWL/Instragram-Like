@@ -189,4 +189,20 @@
         android:onClick="changePassword"
         android:clickable="true"/>
 
+    <TextView
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="178dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="178dp"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:onClick="logout"
+        android:text="Log out?"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
 </android.support.constraint.ConstraintLayout>

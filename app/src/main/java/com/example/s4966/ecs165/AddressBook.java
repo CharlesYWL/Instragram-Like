@@ -104,7 +104,6 @@ public class AddressBook extends Fragment {
 
             @Override
             protected  void onBindViewHolder(final FollowViewHolder holder, int position,final String model){
-                Toast.makeText(getActivity(),"fetch "+model,Toast.LENGTH_SHORT).show();
                 holder.setName(model);
                 holder.setPhoto(model);
                 //on Click listener
@@ -114,6 +113,13 @@ public class AddressBook extends Fragment {
                         Intent intent = new Intent(getContext(),ShowPosts.class);
                         intent.putExtra("uid",model);
                         startActivity(intent);
+                    }
+                });
+
+                holder.unfollowText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -138,7 +144,7 @@ public class AddressBook extends Fragment {
 
     public class FollowViewHolder extends RecyclerView.ViewHolder{
         View mView;
-        TextView mTextView;
+        TextView mTextView,unfollowText;
         ImageView mPhoto;
         String TAG = "FollowViewHolder";
         public FollowViewHolder(View itemView){
@@ -146,6 +152,7 @@ public class AddressBook extends Fragment {
             mView = itemView;
             mTextView = mView.findViewById(R.id.Name);
             mPhoto = mView.findViewById(R.id.Photo);
+            unfollowText = mTextView.findViewById(R.id.unfollow);
         }
 
         public void setPhoto(String uid){

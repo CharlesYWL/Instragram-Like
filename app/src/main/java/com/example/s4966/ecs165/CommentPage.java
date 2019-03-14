@@ -87,9 +87,6 @@ public class CommentPage extends AppCompatActivity{
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        //TODO:Not a right way to refresh recycleView
-       // InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-       // imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
     //when click the button
@@ -100,8 +97,6 @@ public class CommentPage extends AppCompatActivity{
                 if(comment.getText().length()==0){
                     Toast.makeText(CommentPage.this, "No Comment!", Toast.LENGTH_SHORT).show();
                 }else{
-                    //test only
-                    Toast.makeText(CommentPage.this, comment.getText().toString(), Toast.LENGTH_SHORT).show();
                     String time = getTimestamp();
                     final CommentModel commentModel = new CommentModel(comment.getText().toString(),uti.getUserID().toString(),time,uid,pid,null);
                     uti.addCommandToPost(pid,uid,commentModel);
@@ -133,8 +128,7 @@ public class CommentPage extends AppCompatActivity{
         Intent intent=getIntent();
         pid = intent.getStringExtra("pid");//for searching stuff
         uid = intent.getStringExtra("uid");
-
-        Toast.makeText(this, "get pid: "+pid, Toast.LENGTH_SHORT).show();
+        
         //init View
         SendButton = findViewById(R.id.send_comment_button);
         comment = findViewById(R.id.comment_view_holder);

@@ -161,21 +161,7 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
                 newPost.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
 
                 Log.d(TAG, "getPhotos: photo: " + newPost.getPost_id());
-                        /*
-                        List<CommentModel> commentsList = new ArrayList<CommentModel>();
-                        for (DataSnapshot dSnapshot : singleSnapshot
-                                .child(getString(R.string.field_comments)).getChildren()){
-                            Map<String, Object> object_map = (HashMap<String, Object>) dSnapshot.getValue();
-                            Comment comment = new Comment();
-                            comment.setUser_id(object_map.get(getString(R.string.field_user_id)).toString());
-                            comment.setComment(object_map.get(getString(R.string.field_comment)).toString());
-                            comment.setDate_created(object_map.get(getString(R.string.field_date_created)).toString());
-                            commentsList.add(comment);
 
-                        }
-
-                        newPost.setComments(commentsList);
-                        */
                 posts.add(newPost);
                 getPostsViaTracers(tracers);
             }
@@ -195,8 +181,7 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
             Query query = firebaseUtil.getDatabaseRef()
                     .child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
                     .child(followingUsers.get(i))
-                    //.orderByChild(getString())
-                    //.equalTo(followingUsers.get(i))
+
                     ;
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -215,28 +200,10 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
                         newPost.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
 
                         Log.d(TAG, "getPhotos: photo: " + newPost.getPost_id());
-                        /*
-                        List<CommentModel> commentsList = new ArrayList<CommentModel>();
-                        for (DataSnapshot dSnapshot : singleSnapshot
-                                .child(getString(R.string.field_comments)).getChildren()){
-                            Map<String, Object> object_map = (HashMap<String, Object>) dSnapshot.getValue();
-                            Comment comment = new Comment();
-                            comment.setUser_id(object_map.get(getString(R.string.field_user_id)).toString());
-                            comment.setComment(object_map.get(getString(R.string.field_comment)).toString());
-                            comment.setDate_created(object_map.get(getString(R.string.field_date_created)).toString());
-                            commentsList.add(comment);
 
-                        }
-
-                        newPost.setComments(commentsList);
-                        */
                         posts.add(newPost);
                     }
-                    /*
-                    if(count >= mFollowing.size() - 1){
-                        //display the photos
-                        displayPhotos();
-                    }*/
+
                     presentPostList();
                 }
 
@@ -260,26 +227,9 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
                     }
                 });
 
-                //we want to load 10 at a time. So if there is more than 10, just load 10 to start
-                /*
-                int iterations = mPhotos.size();
-                if(iterations > 10){
-                    iterations = 10;
-                }
-
-//
-                //resultsCount = 0;
-                for(int i = 0; i < iterations; i++){
-                    mPaginatedPhotos.add(mPhotos.get(i));
-                    resultsCount++;
-                    Log.d(TAG, "displayPhotos: adding a photo to paginated list: " + mPhotos.get(i).getPhoto_id());
-                }
-                */
-
                 adapter = new FeedListAdapter(ShowPosts.this, R.layout.layout_post_view, posts);
                 listView.setAdapter(adapter);
-                //adapter = new MainFeedListAdapter(getActivity(), R.layout.layout_mainfeed_listitem, mPaginatedPhotos);
-                //mListView.setAdapter(adapter);
+
 
                 // Notify update is done
                 listView.notifyUpdated();
@@ -300,75 +250,6 @@ public class ShowPosts  extends AppCompatActivity implements OnUpdateListener, O
         listView.enableLoadFooter(true).getLoadFooter().setLoadAction(LoadFooter.LoadAction.RELEASE_TO_LOAD);
         //listView.setOnUpdateListener(this).setOnLoadListener(this);
     }
-
-    /*
-    private void setupPostGrid(){
-        Log.d("profile activity: setup post grid", "Setting up post grid.");
-
-        // first get all posts
-        posts = new ArrayList<>();
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        Query query = databaseReference
-                .child(FirebasePaths.FIREBASE_POST_DATABASE_PATH)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleNode : dataSnapshot.getChildren()){
-                    Postmodel post = new Postmodel();
-                    try{
-                        post.setText((String)singleNode.child(getString(R.string.field_text)).getValue());
-                        post.setDate_created((String) singleNode.child(getString(R.string.field_date)).getValue());
-                        post.setImage_path((String) singleNode.child(getString(R.string.field_image_path)).getValue());
-                        post.setPost_id((String) singleNode.child(getString(R.string.field_pid)).getValue());
-                        post.setUser_id((String) singleNode.child(getString(R.string.field_uid)).getValue());
-                        ArrayList<LikeModel> likes = new ArrayList<>();
-                        for(DataSnapshot likeNode : singleNode.child(getString(R.string.field_like_node)).getChildren()){
-                            LikeModel likeModel = new LikeModel((String)likeNode.getValue());
-                            likes.add(likeModel);
-                        }
-                        post.setLikes(likes);
-                        Log.d("Profile set up grid", "post image_path is: " + post.getImage_path());
-
-
-                        posts.add(post);
-                        setupPostGrid2(posts);
-
-                    }catch(NullPointerException e){
-                        Log.e("Profile set up grid", e.getMessage());
-                        Toast.makeText(ShowPosts.this, "setup grid post failure", Toast.LENGTH_LONG);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("Profile set up grid", "retrieving post info failed");
-                Toast.makeText(ShowPosts.this, "retrieving posts failed", Toast.LENGTH_LONG);
-            }
-        });
-
-    }
-
-    private void setupPostGrid2(ArrayList<Postmodel> posts){
-        // then get storageImagePath
-        final ArrayList<String> imageStoragePaths = new ArrayList<>();
-        for(Postmodel post : posts){
-            imageStoragePaths.add(post.getStorageImagePath());
-        }
-        Log.d("Profile Activity", "number of posts gathered: " + Integer.toString(imageStoragePaths.size()));
-
-        // finally put image in grid in adapter TODO
-        int gridWidth = getResources().getDisplayMetrics().widthPixels;
-        int imageWidth = gridWidth/NUM_GRID_COLUMNS;
-        gridView.setColumnWidth(imageWidth);
-
-        ProfilePostsAdapter adapter = new ProfilePostsAdapter(ShowPosts.this, R.layout.layout_grid_view, imageStoragePaths);
-        gridView.setAdapter(adapter);
-
-    }*/
 
 
     public void setBackWork(Toolbar tb){

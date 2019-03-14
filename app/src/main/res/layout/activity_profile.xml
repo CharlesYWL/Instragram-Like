@@ -85,31 +85,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/uid_layout"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ID"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="8dp"/>
-                <TextView
-                    android:id="@+id/uid_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="ddf567"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"
-                    android:layout_marginEnd="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/gender_layout"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -161,13 +136,41 @@
                     android:ellipsize="end" />
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/MyProfeed"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:onClick="openMyFeed">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="MyFeed"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp"/>
 
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:text="                Click to Enter"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
 
-
+            </LinearLayout>
 
         </LinearLayout>
-        
+
     </ScrollView>
+
+
+
     <android.support.constraint.Barrier
         android:id="@+id/labelBarrier"
         android:layout_width="wrap_content"
@@ -179,21 +182,5 @@
 
 
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="147dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="40dp"
-        android:text="Log Out"
-        android:textColor="@color/red"
-        android:textSize="28sp"
-        android:background="@drawable/white_rounded_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:clickable="true"
-        android:onClick="logout"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 case R.id.navigation_profile:
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     Intent intent2 = new Intent();
                     intent2.setClass(MainActivity.this,Profile.class);
+                    intent2.putExtra("uid",currentUser.getUid());
                     startActivity(intent2);
                     return true;
             }
