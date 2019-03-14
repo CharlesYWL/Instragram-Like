@@ -125,6 +125,11 @@ public class SearchResult extends AppCompatActivity {
                 holder.imb.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
+                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if(equal(currentUser.getUid(),model.getUid())){
+                            Toast.makeText(getApplicationContext(),"You cannot add yourself",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Toast.makeText(SearchResult.this,"Added",Toast.LENGTH_SHORT).show();
                         holder.setButton(true);
 
@@ -161,7 +166,7 @@ public class SearchResult extends AppCompatActivity {
         tb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(getBaseContext(),SearchUser.class));
             }
         });
     }
@@ -247,6 +252,21 @@ public class SearchResult extends AppCompatActivity {
             query.child("test").setValue("123");
             query.child("test").setValue(null);
         }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+
+    //change back behavior
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(getBaseContext(),SearchUser.class));
     }
 }
 
